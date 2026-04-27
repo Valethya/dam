@@ -1,0 +1,22 @@
+.footer{
+    height: auto;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1em;
+    background-color: cadetblue;
+}
+.footer-list{
+    width: 70%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    li{
+        list-style: none;
+        &:hover{
+            color: chocolate;
+            transition: .3s;
+        }
+    }
+}
