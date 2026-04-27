@@ -13,10 +13,14 @@
     align-items: center;
     li{
         list-style: none;
+    }
+    
+}
+.navbar-link{
+    text-decoration: none;
+    color: #000;
         &:hover{
         color: red;
         transition: .3s;   
         }
-    }
-    
 }

@@ -14,9 +14,14 @@
     justify-content: space-around;
     li{
         list-style: none;
-        &:hover{
-            color: chocolate;
-            transition: .3s;
-        }
     }
+}
+
+.footer-link{
+    text-decoration: none;
+    color: #000;
+        &:hover{
+        color: rgb(194, 90, 90);
+        transition: .3s;   
+        }
 }
