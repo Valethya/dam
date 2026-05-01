@@ -1,6 +1,7 @@
 .footer{
     height: auto;
     width: 100%;
+    min-height: 2.5em;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -8,10 +9,12 @@
     background-color: cadetblue;
 }
 .footer-list{
-    width: 70%;
+    width: 100%;
+    padding-inline-start:0;
+    margin:1em;
     display: flex;
     align-items: center;
-    justify-content: space-around;
+    justify-content: space-between;
     li{
         list-style: none;
     }
