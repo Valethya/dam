@@ -4,10 +4,10 @@
 @use './base/reset';
 @use './base/typography';
 
-@use './layout/container';
-
 @use './components/buttons';
 @use './components/navbar';
 @use './components/footer';
+@use './components/grid';
+@use './components/cards';
 
-@use './pages/home'
+@use './pages/home';
