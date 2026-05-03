@@ -1,0 +1,39 @@
+---
+import Field from "../components/ui/Field.astro"
+import Button from "../components/ui/Button.astro"
+---
+<section class="contact">
+    <form class="contact-form">
+  <Field
+    label="Nombre"
+    name="name"
+    placeholder="Tu nombre"
+    required
+  />
+
+  <Field
+    label="Email"
+    name="email"
+    type="email"
+    placeholder="tu@email.com"
+    required
+  />
+
+  <Field
+    label="Teléfono"
+    name="phone"
+    type="tel"
+    placeholder="+56 9 1234 5678"
+  />
+
+  <Field
+    as="textarea"
+    label="Cuéntanos sobre tu proyecto"
+    name="message"
+    placeholder="Tipo de proyecto, fecha estimada, referencias..."
+    rows={6}
+    required
+  />
+<Button type="submit">Enviar proyecto</Button>
+    </form>
+</section>
