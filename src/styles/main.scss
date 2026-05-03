@@ -4,10 +4,18 @@
 @use './base/reset';
 @use './base/typography';
 
-@use './components/buttons';
 @use './components/navbar';
 @use './components/footer';
-@use './components/grid';
 @use './components/cards';
+
+@use './components/ui/field';
+@use './components/ui/buttons';
+
+
+@use './sections/grid';
+@use './sections/hero';
+@use './sections/about';
+@use './sections/contact';
+
 
 @use './pages/home';
