@@ -1,0 +1,32 @@
+.button {
+  width: 100%;
+  cursor: pointer;
+  padding: 0.9rem 1.4rem;
+  font: inherit;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  background: transparent;
+  border: none;
+}
+
+/* Primario */
+.button--primary {
+  border: 1px solid currentColor;
+}
+
+/* Outline */
+.button--outline {
+  border: 1px solid currentColor;
+  opacity: 0.7;
+}
+
+/* Ghost */
+.button--ghost {
+  border: none;
+  opacity: 0.7;
+}
+
+/* Hover */
+.button:hover {
+  opacity: 1;
+}
