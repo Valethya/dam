@@ -1,0 +1,15 @@
+---
+const {
+  type = "button",
+  variant = "primary",
+  disabled = false
+} = Astro.props;
+---
+
+<button
+  class={`button button--${variant}`}
+  type={type}
+  disabled={disabled}
+>
+  <slot />
+</button>
