@@ -1,9 +1,11 @@
+@use "../abstracts/variables" as *;
+
 .card{
     position:relative;
     display: flex;
     height: 100%;
     width: 100%;
-    background-color: rgb(207, 107, 60);
+    background-color:$color-white;
 }
 
 .card-overlay {
