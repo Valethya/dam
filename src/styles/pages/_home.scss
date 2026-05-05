@@ -1,12 +1,14 @@
+@use "../abstracts/variables" as *;
+
 body{
     display: flex;
     min-height: 100vh;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    background-color:blanchedalmond;
 }
 main{
+    font-family: $font-primary;
     min-height: 100vh;
     width: 100%;
     display: flex;
@@ -15,6 +17,5 @@ main{
     align-items: center;
     justify-content: space-around;
     gap: 1px;
-    background-color: darkslategrey;
-    padding: 1rem;
+    background-color:$color-white;
 }
