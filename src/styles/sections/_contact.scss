@@ -13,5 +13,21 @@
     flex-wrap: wrap;
     align-content: space-between;
     gap: 1.5em;
-    padding: 1em;
+    padding: $space-3;
+}
+
+@media (min-width: $bp-tablet) {
+    .contact-form {
+        width: 70%;
+    }
+}
+@media (min-width: $bp-desktop){
+    .contact-form{
+        width: 50%;
+    }
+}
+@media (min-width: $bp-wide){
+    .contact-form{
+        width: 40%;
+    }
 }
