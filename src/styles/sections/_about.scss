@@ -1,6 +1,12 @@
+@use "../abstracts/variables" as *;
+
 .about{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: center;
     width: 100%;
     height: 40vh;
-    background-color:mediumturquoise;
-    padding: .5em;
+    background-color:$color-white;
+    padding: $space-3;
 }
