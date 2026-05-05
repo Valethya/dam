@@ -1,7 +1,14 @@
-:root{
-    --font-main: sans-serif;
-}
-
+@use "../abstracts/variables" as *;
 h1{
-    font-family: var(--font-main);
+    font-family: $font-primary;
+    line-height: $line-height-tight;
+}
+h2{
+    line-height: $line-height-snug;
+}
+.section-title {
+  font-family: $font-display;
+  font-size: $font-h2;
+  line-height: 1;
+  letter-spacing: -0.03em;
 }
