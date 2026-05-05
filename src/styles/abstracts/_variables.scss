@@ -19,18 +19,23 @@ $color-border: $color-gray-300;
 $color-overlay: rgba(0, 0, 0, 0.45);
 
 // Typography
-$font-primary: "Inter", "Helvetica Neue", Arial, sans-serif;
+$font-primary: "inter", Arial, sans-serif;
 $font-display: "Cormorant Garamond", Georgia, serif;
 
+
+// Headings
+$font-hero: clamp(3.25rem, 12vw, 7.5rem);
+$font-h1: clamp(3rem, 9vw, 6rem);
+$font-h2: clamp(2.25rem, 6vw, 4.5rem);
+$font-h3: clamp(1.75rem, 4vw, 3rem);
+$font-h4: clamp(1.4rem, 2.2vw, 1.9rem);
+
 // Font sizes
-$font-size-xs: 0.75rem;   // 12px
-$font-size-sm: 0.875rem;  // 14px
-$font-size-base: 1rem;    // 16px
-$font-size-md: 1.125rem;  // 18px
-$font-size-lg: 1.5rem;    // 24px
-$font-size-xl: 2rem;      // 32px
-$font-size-2xl: 3rem;     // 48px
-$font-size-3xl: 4.5rem;   // 72px
+$font-size-xs: 0.75rem;     // 12px
+$font-size-sm: 0.875rem;    // 14px
+$font-size-base: 1rem;      // 16px
+$font-size-md: 1.125rem;    // 18px
+$font-size-lg: 1.25rem;     // 20px
 
 // Font weights
 $font-light: 300;
@@ -39,9 +44,10 @@ $font-medium: 500;
 $font-bold: 700;
 
 // Line heights
-$line-tight: 1;
-$line-title: 1.1;
-$line-base: 1.5;
+$line-height-tight: 0.9;
+$line-height-snug: 1;
+$line-height-normal: 1.2;
+$line-height-relaxed: 1.6;
 
 // Spacing
 $space-1: 0.25rem;
@@ -58,11 +64,9 @@ $container-max-width: 1200px;
 $container-padding: 1rem;
 
 // Breakpoints
-$bp-sm: 480px;
-$bp-md: 768px;
-$bp-lg: 1024px;
-$bp-xl: 1280px;
-
+$bp-tablet: 768px;
+$bp-desktop: 1024px;
+$bp-wide: 1440px;
 // Radius
 $radius-sm: 4px;
 $radius-md: 8px;
