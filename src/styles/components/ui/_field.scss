@@ -1,17 +1,19 @@
+@use "../../abstracts/variables" as *;
+
 .field {
   display: grid;
   gap: 0.5rem;
   width: 100%;
 }
 
-.field_label {
+.field-label {
   font-size: 0.875rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: white;
+  color:$color-gray-500 ;
 }
 
-.field_control {
+.field-control {
   width: 100%;
   border: none;
   border-bottom: 1px solid currentColor;
@@ -21,16 +23,16 @@
   font: inherit;
 }
 
-.field_control::placeholder {
+.field-control::placeholder {
   color: rgba(255, 255, 255, 0.45);
 }
 
-.field__ontrol:focus {
+.field--ontrol:focus {
   outline: none;
   border-bottom-width: 2px;
 }
 
-textarea.field_control {
+textarea.field-control {
   resize: none;
   min-height: 8rem;
 }
