@@ -1,5 +1,6 @@
 ---
 // Conversational Contact Section for DAM
+const API_URL = import.meta.env.PUBLIC_API_URL || import.meta.env.VITE_API_URL || "http://localhost:3000/api";
 ---
 <section class="contact" id="contact">
   <div class="contact-card">
@@ -125,12 +126,12 @@
   </div>
 </section>
 
-<script>
+<script define:vars={{ API_URL }}>
   // Constantes de configuración API de Agenda
   const BUSINESS_ID = "6a4d32fcfff00a7bf5c002ff";
   const WORKER_ID = "6a4d32fdfff00a7bf5c00303";
   const SERVICE_ID = "6a4d32fdfff00a7bf5c00315";
-  const API_BASE = import.meta.env.PUBLIC_API_URL || import.meta.env.VITE_API_URL || "http://localhost:3000/api";
+  const API_BASE = API_URL;
 
   const MONTH_NAMES = [
     "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
