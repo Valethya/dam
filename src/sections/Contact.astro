@@ -1,40 +1,550 @@
 ---
-import Field from "../components/ui/Field.astro"
-import Button from "../components/ui/Button.astro"
+// Conversational Contact Section for DAM
 ---
 <section class="contact" id="contact">
-  <h2 class="section-title">Tu historia comienza aquí</h2>
-    <form class="contact-form">
-  <Field
-    label="Nombre"
-    name="name"
-    placeholder="Tu nombre"
-    required
-  />
+  <div class="contact-card">
+    <!-- Step 0: Welcome / Header -->
+    <div class="contact-step active" data-step="0">
+      <h2 class="section-title contact-title">Conversemos</h2>
+      <p class="contact-lead-text">Demos forma a tu próxima pieza cinematográfica.</p>
+      <p class="contact-lead-text">Cuéntanos sobre tu proyecto y agendemos una reunión.</p>
+      <div class="contact-actions">
+        <button class="button button--primary btn-start" type="button">Comenzar</button>
+      </div>
+    </div>
 
-  <Field
-    label="Email"
-    name="email"
-    type="email"
-    placeholder="tu@email.com"
-    required
-  />
+    <!-- Step 1: Nombre -->
+    <div class="contact-step" data-step="1">
+      <h2 class="contact-question">¿Con quién tenemos el placer de hablar?</h2>
+      <div class="field">
+        <label class="field-label" for="form-name">Nombre</label>
+        <input class="field-control" id="form-name" type="text" placeholder="Tu nombre y apellido" required />
+        <span class="error-msg" id="error-name">El nombre es obligatorio para iniciar.</span>
+      </div>
+      <div class="contact-actions">
+        <button class="button button--ghost btn-back" type="button">Atrás</button>
+        <button class="button button--primary btn-next" type="button">Continuar</button>
+      </div>
+    </div>
 
-  <Field
-    label="Teléfono"
-    name="phone"
-    type="tel"
-    placeholder="+56 9 1234 5678"
-  />
+    <!-- Step 2: Idea -->
+    <div class="contact-step" data-step="2">
+      <h2 class="contact-question" id="question-step2">¿Cuál es la visión o historia que quieres contar?</h2>
+      <div class="field">
+        <label class="field-label" for="form-project">Tu idea o visión</label>
+        <textarea class="field-control" id="form-project" placeholder="Describe el proyecto, la marca o la idea cinematográfica que tienes en mente..." rows="4" required></textarea>
+        <span class="error-msg" id="error-project">Por favor, comparte un poco de tu visión con nosotros.</span>
+      </div>
+      <div class="contact-actions">
+        <button class="button button--ghost btn-back" type="button">Atrás</button>
+        <button class="button button--primary btn-next" type="button">Continuar</button>
+      </div>
+    </div>
 
-  <Field
-    as="textarea"
-    label="Cuéntanos sobre tu proyecto"
-    name="message"
-    placeholder="Tipo de proyecto, fecha estimada, referencias..."
-    rows={6}
-    required
-  />
-<Button type="submit">Enviar proyecto</Button>
-    </form>
+    <!-- Step 3: Contacto -->
+    <div class="contact-step" data-step="3">
+      <h2 class="contact-question">¿Dónde podemos conectar para profundizar en los detalles?</h2>
+      <div class="field">
+        <label class="field-label" for="form-email">Correo de contacto</label>
+        <input class="field-control" id="form-email" type="email" placeholder="nombre@ejemplo.com" required />
+        <span class="error-msg" id="error-email">Ingresa un correo electrónico válido.</span>
+      </div>
+      <div class="field" style="margin-top: 1.5rem;">
+        <label class="field-label" for="form-phone">Teléfono de contacto</label>
+        <input class="field-control" id="form-phone" type="tel" placeholder="+56 9 1234 5678" required />
+        <span class="error-msg" id="error-phone">Un número de teléfono es requerido.</span>
+      </div>
+      <div class="contact-actions">
+        <button class="button button--ghost btn-back" type="button">Atrás</button>
+        <button class="button button--primary btn-next" type="button">Continuar</button>
+      </div>
+    </div>
+
+    <!-- Step 4: Calendario -->
+    <div class="contact-step" data-step="4">
+      <h2 class="contact-question">¿Qué día agendamos una llamada de exploración?</h2>
+      <div class="calendar-wrapper">
+        <div class="calendar-header">
+          <button class="btn-cal-prev" type="button">&larr;</button>
+          <span class="calendar-current-month" id="cal-month-year">Junio 2026</span>
+          <button class="btn-cal-next" type="button">&rarr;</button>
+        </div>
+        <div class="calendar-grid-weekdays">
+          <span>Dom</span><span>Lun</span><span>Mar</span><span>Mié</span><span>Jue</span><span>Vie</span><span>Sáb</span>
+        </div>
+        <div class="calendar-grid-days" id="calendar-days">
+          <!-- Dinámico -->
+        </div>
+      </div>
+      <span class="error-msg" id="error-date">Por favor, selecciona una fecha.</span>
+      <div class="contact-actions">
+        <button class="button button--ghost btn-back" type="button">Atrás</button>
+        <button class="button button--primary btn-next" type="button" id="btn-step4-next" disabled>Continuar</button>
+      </div>
+    </div>
+
+    <!-- Step 5: Horario -->
+    <div class="contact-step" data-step="5">
+      <h2 class="contact-question">Selecciona una hora para reunirnos</h2>
+      <div class="time-slots-container" id="time-slots">
+        <!-- Dinámico -->
+      </div>
+      <span class="error-msg" id="error-time">Por favor, selecciona un horario.</span>
+      <div class="contact-actions">
+        <button class="button button--ghost btn-back" type="button">Atrás</button>
+        <button class="button button--primary btn-next" type="button" id="btn-step5-next" disabled>Continuar</button>
+      </div>
+    </div>
+
+    <!-- Step 6: Resumen -->
+    <div class="contact-step" data-step="6">
+      <h2 class="contact-question">Detalles de nuestra próxima reunión</h2>
+      <div class="summary-card">
+        <div class="summary-row"><span class="summary-label">Nombre:</span><span class="summary-value" id="sum-name">-</span></div>
+        <div class="summary-row"><span class="summary-label">Visión:</span><span class="summary-value" id="sum-project">-</span></div>
+        <div class="summary-row"><span class="summary-label">Correo:</span><span class="summary-value" id="sum-email">-</span></div>
+        <div class="summary-row"><span class="summary-label">Teléfono:</span><span class="summary-value" id="sum-phone">-</span></div>
+        <div class="summary-row"><span class="summary-label">Fecha:</span><span class="summary-value" id="sum-date">-</span></div>
+        <div class="summary-row"><span class="summary-label">Horario:</span><span class="summary-value" id="sum-time">-</span></div>
+      </div>
+      <span class="error-msg" id="error-submit">Hubo un problema al guardar tu reserva. Por favor, intenta de nuevo.</span>
+      <div class="contact-actions">
+        <button class="button button--ghost btn-back" type="button">Atrás</button>
+        <button class="button button--primary btn-confirm" type="button" id="btn-confirm-booking">Agendar reunión</button>
+      </div>
+    </div>
+
+    <!-- Step 7: Confirmación -->
+    <div class="contact-step" data-step="7">
+      <h2 class="section-title contact-title">En marcha.</h2>
+      <p class="contact-lead-text">Hemos recibido tus detalles. Nos comunicaremos contigo para confirmar nuestra reunión y comenzar a dar forma a tu proyecto.</p>
+      <div class="contact-actions">
+        <button class="button button--primary btn-restart" type="button">Volver al inicio</button>
+      </div>
+    </div>
+  </div>
 </section>
+
+<script>
+  // Constantes de configuración API de Agenda
+  const BUSINESS_ID = "6a2f268481b5a65985f1657c";
+  const WORKER_ID = "6a2f268581b5a65985f16580";
+  const SERVICE_ID = "6a2f268581b5a65985f16592";
+  const API_BASE = "http://localhost:3000/api";
+
+  const MONTH_NAMES = [
+    "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+    "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+  ];
+
+  // Estado del formulario
+  let currentStep = 0;
+  const formData = {
+    name: "",
+    project: "",
+    email: "",
+    phone: "",
+    date: "", // YYYY-MM-DD
+    time: ""  // HH:MM
+  };
+
+  // Objeto Date para el control visual del calendario
+  let calDate = new Date();
+
+  // Elementos del DOM
+  const steps = document.querySelectorAll('.contact-step');
+  const calendarDays = document.getElementById('calendar-days');
+  const calMonthYear = document.getElementById('cal-month-year');
+  const prevCalBtn = document.querySelector('.btn-cal-prev');
+  const nextCalBtn = document.querySelector('.btn-cal-next');
+
+  // Inicialización de la visibilidad
+  function initSteps() {
+    steps.forEach((step, idx) => {
+      if (idx === 0) {
+        step.style.display = 'flex';
+        step.classList.add('active');
+      } else {
+        step.style.display = 'none';
+        step.classList.remove('active');
+      }
+    });
+  }
+
+  // Transición suave entre pantallas
+  function goToStep(stepIndex) {
+    const activeStep = document.querySelector('.contact-step.active');
+    const targetStep = document.querySelector(`.contact-step[data-step="${stepIndex}"]`);
+
+    if (!targetStep) return;
+
+    if (activeStep) {
+      activeStep.classList.remove('active');
+      setTimeout(() => {
+        activeStep.style.display = 'none';
+        targetStep.style.display = 'flex';
+        setTimeout(() => {
+          targetStep.classList.add('active');
+        }, 50);
+      }, 300);
+    } else {
+      targetStep.style.display = 'flex';
+      setTimeout(() => {
+        targetStep.classList.add('active');
+      }, 50);
+    }
+
+    currentStep = stepIndex;
+
+    // Resetear mensajes de error
+    document.querySelectorAll('.error-msg').forEach(el => el.style.display = 'none');
+
+    // Inicializaciones específicas por paso
+    if (stepIndex === 2) {
+      const qElement = document.getElementById('question-step2');
+      if (qElement) {
+        qElement.textContent = `${formData.name}, ¿cuál es la visión o historia que quieres contar?`;
+      }
+    } else if (stepIndex === 4) {
+      renderCalendar();
+    } else if (stepIndex === 6) {
+      renderSummary();
+    }
+  }
+
+  // Validaciones
+  function validateCurrentStep() {
+    if (currentStep === 1) {
+      const nameVal = document.getElementById('form-name').value.trim();
+      if (!nameVal) {
+        document.getElementById('error-name').style.display = 'block';
+        return false;
+      }
+      formData.name = nameVal;
+    } else if (currentStep === 2) {
+      const projectVal = document.getElementById('form-project').value.trim();
+      if (!projectVal) {
+        document.getElementById('error-project').style.display = 'block';
+        return false;
+      }
+      formData.project = projectVal;
+    } else if (currentStep === 3) {
+      const emailVal = document.getElementById('form-email').value.trim();
+      const phoneVal = document.getElementById('form-phone').value.trim();
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      let valid = true;
+
+      if (!emailRegex.test(emailVal)) {
+        document.getElementById('error-email').style.display = 'block';
+        valid = false;
+      }
+      if (!phoneVal) {
+        document.getElementById('error-phone').style.display = 'block';
+        valid = false;
+      }
+      if (!valid) return false;
+
+      formData.email = emailVal;
+      formData.phone = phoneVal;
+    } else if (currentStep === 4) {
+      if (!formData.date) {
+        document.getElementById('error-date').style.display = 'block';
+        return false;
+      }
+    } else if (currentStep === 5) {
+      if (!formData.time) {
+        document.getElementById('error-time').style.display = 'block';
+        return false;
+      }
+    }
+    return true;
+  }
+
+  // Generar y renderizar el calendario (Rango: Próximos 30 días, sin fines de semana, sin días pasados)
+  function renderCalendar() {
+    if (!calendarDays || !calMonthYear) return;
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const maxDate = new Date(today);
+    maxDate.setDate(maxDate.getDate() + 30);
+
+    const year = calDate.getFullYear();
+    const month = calDate.getMonth();
+
+    // Actualizar encabezado de mes
+    calMonthYear.textContent = `${MONTH_NAMES[month]} ${year}`;
+
+    // Deshabilitar paginación fuera de rango
+    prevCalBtn.disabled = (year === today.getFullYear() && month === today.getMonth());
+    nextCalBtn.disabled = (year === maxDate.getFullYear() && month === maxDate.getMonth());
+
+    // Limpiar celdas anteriores
+    calendarDays.innerHTML = '';
+
+    const firstDayIndex = new Date(year, month, 1).getDay();
+    const totalDays = new Date(year, month + 1, 0).getDate();
+
+    // Celdas vacías previas
+    for (let i = 0; i < firstDayIndex; i++) {
+      const span = document.createElement('span');
+      calendarDays.appendChild(span);
+    }
+
+    // Celdas de días
+    for (let day = 1; day <= totalDays; day++) {
+      const cellDate = new Date(year, month, day);
+      const cellDateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'calendar-day';
+      btn.textContent = day;
+
+      const isPast = cellDate < today;
+      const isTooFar = cellDate > maxDate;
+      const isWeekend = cellDate.getDay() === 0 || cellDate.getDay() === 6; // 0: Dom, 6: Sáb
+
+      if (isPast || isTooFar || isWeekend) {
+        btn.disabled = true;
+        btn.classList.add('disabled');
+      } else {
+        if (formData.date === cellDateStr) {
+          btn.classList.add('selected');
+        }
+
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.calendar-day.selected').forEach(el => el.classList.remove('selected'));
+          btn.classList.add('selected');
+          formData.date = cellDateStr;
+          formData.time = ""; // Resetear horario al cambiar la fecha
+          document.getElementById('btn-step4-next').disabled = false;
+
+          // Cargar slots en segundo plano
+          fetchTimeSlots(cellDateStr);
+        });
+      }
+
+      calendarDays.appendChild(btn);
+    }
+  }
+
+  // Obtener slots de disponibilidad del servidor Express (Agenda API)
+  async function fetchTimeSlots(dateStr) {
+    const slotsContainer = document.getElementById('time-slots');
+    const nextBtn = document.getElementById('btn-step5-next');
+    if (!slotsContainer || !nextBtn) return;
+
+    slotsContainer.innerHTML = '<div class="loading-slots">Consultando horarios disponibles...</div>';
+    nextBtn.disabled = true;
+
+    try {
+      const url = `${API_BASE}/availability/slots?workerId=${WORKER_ID}&serviceId=${SERVICE_ID}&date=${dateStr}&businessId=${BUSINESS_ID}`;
+      const res = await fetch(url);
+      if (!res.ok) throw new Error();
+
+      const data = await res.json();
+      const slots = data.payload || [];
+
+      // Filtrar sólo disponibles
+      const availableSlots = slots.filter(s => s.available);
+
+      if (availableSlots.length === 0) {
+        slotsContainer.innerHTML = '<div class="no-slots">No quedan horarios de consulta disponibles para este día. Por favor, selecciona otra fecha.</div>';
+        return;
+      }
+
+      slotsContainer.innerHTML = '';
+      availableSlots.forEach(slot => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'time-slot-btn';
+        btn.textContent = slot.startTime;
+
+        if (formData.time === slot.startTime) {
+          btn.classList.add('selected');
+          nextBtn.disabled = false;
+        }
+
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.time-slot-btn.selected').forEach(el => el.classList.remove('selected'));
+          btn.classList.add('selected');
+          formData.time = slot.startTime;
+          nextBtn.disabled = false;
+        });
+
+        slotsContainer.appendChild(btn);
+      });
+
+    } catch (err) {
+      console.error(err);
+      slotsContainer.innerHTML = '<div class="error-slots">No pudimos conectar con el servidor de agenda. Asegúrate de que el servidor esté corriendo en el puerto 3000.</div>';
+    }
+  }
+
+  // Renderizar resumen
+  function renderSummary() {
+    document.getElementById('sum-name').textContent = formData.name;
+    document.getElementById('sum-project').textContent = formData.project;
+    document.getElementById('sum-email').textContent = formData.email;
+    document.getElementById('sum-phone').textContent = formData.phone;
+
+    // Formatear fecha legible
+    if (formData.date) {
+      const [y, m, d] = formData.date.split('-').map(Number);
+      const dateObj = new Date(y, m - 1, d);
+      const formattedDate = `${dateObj.getDate()} de ${MONTH_NAMES[dateObj.getMonth()]}, ${dateObj.getFullYear()}`;
+      document.getElementById('sum-date').textContent = formattedDate;
+    } else {
+      document.getElementById('sum-date').textContent = "-";
+    }
+
+    document.getElementById('sum-time').textContent = formData.time ? `${formData.time} hrs` : "-";
+  }
+
+  // Enviar agendamiento (Crear cita en la API de Agenda)
+  async function submitAppointment() {
+    const confirmBtn = document.getElementById('btn-confirm-booking');
+    const submitError = document.getElementById('error-submit');
+    if (!confirmBtn || !submitError) return;
+
+    confirmBtn.disabled = true;
+    confirmBtn.textContent = "Confirmando...";
+    submitError.style.display = "none";
+
+    // Separar nombre y apellido
+    const nameParts = formData.name.trim().split(/\s+/);
+    const firstName = nameParts[0] || "";
+    const lastName = nameParts.slice(1).join(" ") || ".";
+
+    const bodyData = {
+      worker: WORKER_ID,
+      service: SERVICE_ID,
+      date: formData.date,
+      startTime: formData.time,
+      notes: formData.project,
+      clientInfo: {
+        firstName,
+        lastName,
+        email: formData.email,
+        phone: formData.phone
+      }
+    };
+
+    try {
+      const res = await fetch(`${API_BASE}/appointments`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-Business-Id": BUSINESS_ID
+        },
+        body: JSON.stringify(bodyData)
+      });
+
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.message || "Error al crear la cita");
+      }
+
+      goToStep(7);
+    } catch (err) {
+      console.error(err);
+      submitError.textContent = `Error: ${err.message || 'No se pudo registrar la reserva. Intenta de nuevo.'}`;
+      submitError.style.display = "block";
+    } finally {
+      confirmBtn.disabled = false;
+      confirmBtn.textContent = "Confirmar conversación";
+    }
+  }
+
+  // Limpiar y resetear el formulario
+  function resetForm() {
+    formData.name = "";
+    formData.project = "";
+    formData.email = "";
+    formData.phone = "";
+    formData.date = "";
+    formData.time = "";
+
+    const nameInput = document.getElementById('form-name');
+    const projectInput = document.getElementById('form-project');
+    const emailInput = document.getElementById('form-email');
+    const phoneInput = document.getElementById('form-phone');
+
+    if (nameInput) nameInput.value = "";
+    if (projectInput) projectInput.value = "";
+    if (emailInput) emailInput.value = "";
+    if (phoneInput) phoneInput.value = "";
+
+    const step4Next = document.getElementById('btn-step4-next');
+    const step5Next = document.getElementById('btn-step5-next');
+    if (step4Next) step4Next.disabled = true;
+    if (step5Next) step5Next.disabled = true;
+
+    calDate = new Date();
+    goToStep(0);
+  }
+
+  // Inicializar Event Listeners
+  document.addEventListener('DOMContentLoaded', () => {
+    initSteps();
+
+    // Botones de inicio
+    document.querySelectorAll('.btn-start').forEach(btn => {
+      btn.addEventListener('click', () => goToStep(1));
+    });
+
+    // Botones continuar
+    document.querySelectorAll('.btn-next').forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (validateCurrentStep()) {
+          goToStep(currentStep + 1);
+        }
+      });
+    });
+
+    // Botones atrás
+    document.querySelectorAll('.btn-back').forEach(btn => {
+      btn.addEventListener('click', () => {
+        goToStep(currentStep - 1);
+      });
+    });
+
+    // Botón confirmar
+    const confirmBtn = document.getElementById('btn-confirm-booking');
+    if (confirmBtn) {
+      confirmBtn.addEventListener('click', submitAppointment);
+    }
+
+    // Botón reiniciar
+    document.querySelectorAll('.btn-restart').forEach(btn => {
+      btn.addEventListener('click', resetForm);
+    });
+
+    // Paginación calendario
+    if (prevCalBtn && nextCalBtn) {
+      prevCalBtn.addEventListener('click', () => {
+        calDate.setMonth(calDate.getMonth() - 1);
+        renderCalendar();
+      });
+      nextCalBtn.addEventListener('click', () => {
+        calDate.setMonth(calDate.getMonth() + 1);
+        renderCalendar();
+      });
+    }
+
+    // Accesibilidad teclado (Enter en inputs)
+    const inputs = document.querySelectorAll('.field-control');
+    inputs.forEach(input => {
+      input.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' && input.tagName !== 'TEXTAREA') {
+          e.preventDefault();
+          const stepDiv = input.closest('.contact-step');
+          const nextBtn = stepDiv.querySelector('.btn-next');
+          if (nextBtn) nextBtn.click();
+        }
+      });
+    });
+  });
+</script>

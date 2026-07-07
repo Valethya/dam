@@ -4,13 +4,16 @@
   display: grid;
   gap: 0.5rem;
   width: 100%;
+  margin: 0;
 }
 
 .field-label {
+  font-family: $font-primary;
+  font-weight: 500;
   font-size: 0.875rem;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color:$color-gray-500 ;
+  letter-spacing: 0.18em;
+  color: $color-gray-500;
 }
 
 .field-control {
@@ -24,12 +27,15 @@
 }
 
 .field-control::placeholder {
-  color: rgba(255, 255, 255, 0.45);
+  color: $color-gray-500;
+  background-color: transparent;
 }
 
-.field--ontrol:focus {
+.field-control:focus {
   outline: none;
-  border-bottom-width: 2px;
+}
+.field-control:focus-visible {
+  outline: none;
 }
 
 textarea.field-control {

@@ -1,6 +1,81 @@
 <section class="about" id="about">
-    <h2 class="section-title">About</h2>
-    <p>Qué hacen</p>
-    <p>Cómo lo hacen</p>
-    <p>Por qué importa</p>
+    <div class="about-container">
+        <div class="about-col reveal">
+            <div class="about-trigger">
+                <div class="about-header-text">
+                    <span class="about-num">01</span>
+                    <h3 class="about-subtitle">Enfoque</h3>
+                </div>
+                <span class="about-icon">+</span>
+            </div>
+            <div class="about-content">
+                <p class="about-text">
+                    DAM es un estudio creativo independiente que desarrolla piezas cinematográficas para proyectos y marcas, priorizando la narrativa y la dirección visual.
+                </p>
+            </div>
+        </div>
+        
+        <div class="about-col reveal reveal-delay-1">
+            <div class="about-trigger">
+                <div class="about-header-text">
+                    <span class="about-num">02</span>
+                    <h3 class="about-subtitle">Filosofía</h3>
+                </div>
+                <span class="about-icon">+</span>
+            </div>
+            <div class="about-content">
+                <p class="about-text">
+                    No seguimos fórmulas. Cada proyecto se desarrolla desde cero, adaptando la narrativa, el lenguaje visual y las decisiones creativas a la identidad de cada proyecto.
+                </p>
+            </div>
+        </div>
+        
+        <div class="about-col reveal reveal-delay-2">
+            <div class="about-trigger">
+                <div class="about-header-text">
+                    <span class="about-num">03</span>
+                    <h3 class="about-subtitle">Propósito</h3>
+                </div>
+                <span class="about-icon">+</span>
+            </div>
+            <div class="about-content">
+                <p class="about-text">
+                    Porque cada proyecto merece una identidad visual que esté a la altura de lo que representa.
+                </p>
+            </div>
+        </div>
+    </div>
 </section>
+
+<script>
+  function initAboutAccordion() {
+    const cols = document.querySelectorAll('.about-col');
+    cols.forEach(col => {
+      const trigger = col.querySelector('.about-trigger');
+      if (trigger) {
+        trigger.addEventListener('click', () => {
+          if (window.innerWidth < 768) {
+            const isActive = col.classList.contains('active');
+            
+            // Close other columns to behave as a single-open accordion
+            cols.forEach(c => c.classList.remove('active'));
+            
+            if (!isActive) {
+              col.classList.add('active');
+            }
+          }
+        });
+      }
+    });
+  }
+
+  // Run on load
+  initAboutAccordion();
+
+  // Reset active classes when resizing to desktop
+  window.addEventListener('resize', () => {
+    if (window.innerWidth >= 768) {
+      document.querySelectorAll('.about-col').forEach(c => c.classList.remove('active'));
+    }
+  });
+</script>

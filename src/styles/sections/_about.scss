@@ -1,12 +1,164 @@
 @use "../abstracts/variables" as *;
 
-.about{
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: column;
-    justify-content: center;
+.about {
+  width: 100%;
+  padding: $space-6 $space-4;
+  background-color: $color-gray-900;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+
+  @media (min-width: $bp-tablet) {
+    padding: $space-8 $space-4;
+  }
+}
+
+.about-container {
+  width: 85%;
+  max-width: $container-max-width;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: $space-4;
+
+  @media (min-width: $bp-tablet) {
     width: 100%;
-    height: 40vh;
-    background-color:$color-white;
-    padding: $space-3;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: $space-5;
+  }
+}
+
+.about-col {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  padding-bottom: $space-2;
+  
+  // Smooth fade in on scroll
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+
+  &.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (min-width: $bp-tablet) {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+}
+
+.about-trigger {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  width: 100%;
+  padding: $space-2 0;
+
+  @media (min-width: $bp-tablet) {
+    cursor: default;
+    justify-content: flex-start;
+    padding: 0;
+    margin-bottom: $space-3;
+  }
+}
+
+.about-header-text {
+  display: flex;
+  align-items: baseline;
+  gap: $space-3;
+
+  @media (min-width: $bp-tablet) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+  }
+}
+
+.about-num {
+  font-family: $font-display;
+  font-size: 2.2rem;
+  line-height: 1;
+  color: rgba(255, 255, 255, 0.08);
+  
+  @media (min-width: $bp-tablet) {
+    font-size: 3rem;
+    margin-bottom: $space-2;
+  }
+}
+
+.about-subtitle {
+  font-family: $font-primary;
+  font-size: $font-size-md;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: $color-white;
+  font-weight: 500;
+  margin: 0;
+
+  @media (min-width: $bp-tablet) {
+    font-size: $font-size-sm;
+  }
+}
+
+.about-icon {
+  font-family: $font-primary;
+  font-size: 1.5rem;
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.4);
+  transition: transform 0.4s ease, color 0.3s ease;
+  line-height: 1;
+
+  @media (min-width: $bp-tablet) {
+    display: none;
+  }
+}
+
+.about-col.active {
+  .about-icon {
+    transform: rotate(45deg);
+    color: $color-white;
+  }
+}
+
+.about-content {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.4s ease-out, opacity 0.3s ease-out;
+
+  @media (min-width: $bp-tablet) {
+    max-height: none;
+    overflow: visible;
+    opacity: 1;
+  }
+}
+
+.about-text {
+  font-family: $font-primary;
+  font-size: $font-size-base;
+  line-height: 1.6;
+  color: $color-gray-300;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  padding-left: 2.8rem;
+  padding-right: $space-2;
+  padding-bottom: $space-4;
+
+  @media (min-width: $bp-tablet) {
+    padding-left: 0;
+    padding-right: 0;
+    padding-bottom: 0;
+  }
+}
+
+.about-col.active .about-content {
+  max-height: 200px; /* Safe expanded limit for smooth height transition */
+  opacity: 1;
 }

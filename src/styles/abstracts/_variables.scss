@@ -1,41 +1,40 @@
 // abstracts/_variables.scss
 
 // Colors
-$color-white: #ffffff;
+$color-white: #f6f4f1;
 $color-black: #050505;
 
 $color-gray-100: #f5f5f5;
 $color-gray-300: #d9d9d9;
-$color-gray-500: #8a8a8a;
-$color-gray-700: #3a3a3a;
-$color-gray-900: #111111;
+$color-gray-500: #666666;
+$color-gray-700: #464646;
+$color-gray-900: #050203;
 
 // Semantic colors
 $color-bg: $color-white;
-$color-surface: $color-gray-100;
+$color-surface: $color-white;
 $color-text: $color-gray-900;
 $color-text-soft: $color-gray-500;
-$color-border: $color-gray-300;
+$color-border: $color-white;
 $color-overlay: rgba(0, 0, 0, 0.45);
 
 // Typography
 $font-primary: "inter", Arial, sans-serif;
 $font-display: "Cormorant Garamond", Georgia, serif;
 
-
 // Headings
 $font-hero: clamp(3.25rem, 12vw, 7.5rem);
 $font-h1: clamp(3rem, 9vw, 6rem);
-$font-h2: clamp(2.25rem, 6vw, 4.5rem);
-$font-h3: clamp(1.75rem, 4vw, 3rem);
+$font-h2: clamp(2.25rem, 4rem, 4.5rem);
+$font-h3: clamp(3rem, 4vw, 3rem);
 $font-h4: clamp(1.4rem, 2.2vw, 1.9rem);
 
 // Font sizes
-$font-size-xs: 0.75rem;     // 12px
-$font-size-sm: 0.875rem;    // 14px
-$font-size-base: 1rem;      // 16px
-$font-size-md: 1.125rem;    // 18px
-$font-size-lg: 1.25rem;     // 20px
+$font-size-xs: 0.75rem; // 12px
+$font-size-sm: 0.875rem; // 14px
+$font-size-base: 1rem; // 16px
+$font-size-md: 1.125rem; // 18px
+$font-size-lg: 1.25rem; // 20px
 
 // Font weights
 $font-light: 300;
@@ -67,10 +66,6 @@ $container-padding: 1rem;
 $bp-tablet: 768px;
 $bp-desktop: 1024px;
 $bp-wide: 1440px;
-// Radius
-$radius-sm: 4px;
-$radius-md: 8px;
-$radius-lg: 16px;
 
 // Transitions
 $transition-fast: 0.2s ease;

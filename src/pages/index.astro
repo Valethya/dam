@@ -12,12 +12,137 @@ import Contact from '../sections/Contact.astro';
         <Hero/>
         <About/>
         <Grid>
-            <Cards/> 
-            <Cards/> 
-            <Cards/> 
-            <Cards/> 
-            <Cards/> 
+            <Cards url="/videos/barberhaus.mp4" poster="/videos/barberhaus_poster.webp" title="Barberhaus" class="reveal"/> 
+            <Cards url="/videos/matrimonioam.mov" poster="/videos/matrimonioam_poster.jpg" title="Matrimonio AM" class="reveal reveal-delay-1"/> 
+            <Cards url="/videos/matrimoniopm.mov" poster="/videos/matrimoniopm_poster.jpg" title="Matrimonio PM" class="reveal reveal-delay-2"/> 
+            <Cards url="/videos/nikkei.mov" poster="/videos/nikkei_poster.jpg" title="Nikkei" class="reveal reveal-delay-3"/> 
+            <Cards url="/videos/ornamental.mov" poster="/videos/ornamental_poster.jpg" title="Ornamental" class="reveal"/> 
+            <Cards url="/videos/petra.mov" poster="/videos/petra_poster.jpg" title="Petra" class="reveal reveal-delay-1"/> 
         </Grid>
         <Contact/>
     </main>
 </Layout>
+
+<script>
+  // 1. Reveal animation on scroll (fade in)
+  const revealObserver = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        revealObserver.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+  // 2. Play/Pause videos based on viewport visibility
+  const videoObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      const card = entry.target;
+      const video = card.querySelector('video.card-video');
+      
+      if (video) {
+        if (entry.isIntersecting) {
+          // Pause all other videos first
+          document.querySelectorAll('video.card-video').forEach(otherVideo => {
+            if (otherVideo !== video) {
+              otherVideo.pause();
+            }
+          });
+          
+          // Play the current video
+          video.play().catch(err => {
+            console.log('Autoplay was prevented by browser security:', err);
+          });
+        } else {
+          // Pause when leaving the viewport
+          video.pause();
+        }
+      }
+    });
+  }, { threshold: 0.5 }); // Trigger when 50% of the card is visible
+
+  document.querySelectorAll('.grid .card').forEach(card => {
+    videoObserver.observe(card);
+  });
+
+  // 3. Click / Tap & Hover interaction for videos and animated images
+  const cards = document.querySelectorAll('.grid .card');
+  cards.forEach(card => {
+    const video = card.querySelector('video.card-video');
+    const img = card.querySelector('img.card-video');
+
+    // Handle video items
+    if (video) {
+      card.addEventListener('mouseenter', () => {
+        video.currentTime = 0;
+        document.querySelectorAll('video.card-video').forEach(otherVideo => {
+          if (otherVideo !== video) {
+            otherVideo.pause();
+          }
+        });
+        video.play().catch(err => console.log('Hover play failed:', err));
+      });
+
+      card.addEventListener('mouseleave', () => {
+        video.pause();
+      });
+    }
+
+    // Handle animated WebP items with posters
+    if (img) {
+      const animatedSrc = img.getAttribute('data-animated-src');
+      const posterSrc = img.getAttribute('data-poster-src');
+
+      if (animatedSrc && posterSrc) {
+        card.addEventListener('mouseenter', () => {
+          img.src = animatedSrc;
+        });
+
+        card.addEventListener('mouseleave', () => {
+          img.src = posterSrc;
+        });
+      }
+    }
+
+    card.addEventListener('click', (e) => {
+      const isCurrentlyActive = card.classList.contains('active-color');
+      cards.forEach(c => c.classList.remove('active-color'));
+      
+      if (!isCurrentlyActive) {
+        card.classList.add('active-color');
+      } else {
+        card.classList.remove('active-color');
+      }
+
+      // Handle video play on click/tap
+      if (video) {
+        if (video.paused) {
+          video.currentTime = 0;
+          document.querySelectorAll('video.card-video').forEach(otherVideo => {
+            if (otherVideo !== video) {
+              otherVideo.pause();
+            }
+          });
+          video.play().catch(err => console.log('Click play failed:', err));
+        } else {
+          video.pause();
+        }
+      }
+
+      // Handle animated WebP play on click/tap (for mobile)
+      if (img) {
+        const animatedSrc = img.getAttribute('data-animated-src');
+        const posterSrc = img.getAttribute('data-poster-src');
+        if (animatedSrc && posterSrc) {
+          if (card.classList.contains('active-color')) {
+            img.src = animatedSrc;
+          } else {
+            img.src = posterSrc;
+          }
+        }
+      }
+    });
+  });
+</script>

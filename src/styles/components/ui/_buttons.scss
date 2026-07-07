@@ -1,32 +1,51 @@
+@use "../../abstracts/variables" as *;
+
 .button {
   width: 100%;
   cursor: pointer;
   padding: 0.9rem 1.4rem;
-  font: inherit;
+  font-family: $font-primary;
+  font-weight: 500;
+  font-size: $font-size-xs;
+  color: inherit;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.18em;
   background: transparent;
   border: none;
+  transition: all $transition-base;
 }
 
 /* Primario */
 .button--primary {
   border: 1px solid currentColor;
+  &:hover:not(:disabled) {
+    background-color: $color-white;
+    color: $color-black;
+  }
 }
 
 /* Outline */
 .button--outline {
   border: 1px solid currentColor;
   opacity: 0.7;
+  &:hover:not(:disabled) {
+    opacity: 1;
+    background-color: rgba(255, 255, 255, 0.08);
+  }
 }
 
 /* Ghost */
 .button--ghost {
-  border: none;
+  border: 1px solid $color-gray-900;
   opacity: 0.7;
+  &:hover:not(:disabled) {
+    opacity: 1;
+    background-color: rgba(22, 22, 22, 0.925);
+  }
 }
 
-/* Hover */
-.button:hover {
-  opacity: 1;
+/* Estado Deshabilitado */
+.button:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
 }

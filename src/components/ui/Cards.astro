@@ -1,14 +1,38 @@
 ---
+const {
+  url,
+  poster,
+  title = "proyecto",
+  class: className = ""
+} = Astro.props;
 
+const isVideo = url && /\.(mp4|mov|webm)$/i.test(url);
 ---
 
 
-<article class="card">
-    <img src="" alt="proyecto">
-
-    </img>
+<article class={`card ${className}`}>
+    {isVideo ? (
+        <video
+            class="card-video"
+            src={url}
+            poster={poster}
+            muted
+            loop
+            playsinline
+            preload="metadata"
+        ></video>
+    ) : (
+        <img
+            class="card-video"
+            src={poster || url}
+            alt={title}
+            data-animated-src={url}
+            data-poster-src={poster}
+            loading="lazy"
+        />
+    )}
     <div class="card-overlay" >
-        <h3 class="card-title">proyecto</h3>
+        <h3 class="card-title">{title}</h3>
     </div>
 
 </article>

@@ -1,11 +1,14 @@
 ---
+const currentYear = new Date().getFullYear();
 ---
 
 <footer class="footer">
-    <ul class="footer-list">
-        <li><a class="footer-link" href="">Cosas</a></li>
-        <li><a class="footer-link" href="">Cosas</a></li>
-        <li><a class="footer-link" href="">Cosas</a></li>
-        <li><a class="footer-link" href="">Cosas</a></li>
-    </ul>
+    <div class="footer-container">
+        <div class="footer-copyright">
+            <span>© 2025 - {currentYear} DAM</span>
+        </div>
+        <ul class="footer-list">
+            <li><a class="footer-link" href="https://www.instagram.com/damfilmscl/?hl=es" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+        </ul>
+    </div>
 </footer>
