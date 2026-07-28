@@ -13,18 +13,30 @@
 
   transition: filter 1.2s cubic-bezier(0.25, 1, 0.5, 1);
 
-  &:hover .card-overlay {
-    opacity: 1;
-  }
-
-  &:hover .card-video,
   &.active-color .card-video {
     transform: scale(1.05);
   }
 
-  &:hover,
+  &.active-color .card-overlay {
+    opacity: 1;
+  }
+
   &.active-color {
     filter: grayscale(0%);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    &:hover .card-overlay {
+      opacity: 1;
+    }
+
+    &:hover .card-video {
+      transform: scale(1.05);
+    }
+
+    &:hover {
+      filter: grayscale(0%);
+    }
   }
 }
 
