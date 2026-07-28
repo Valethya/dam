@@ -36,36 +36,41 @@ import Contact from '../sections/Contact.astro';
 
   document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
-  // 2. Play/Pause videos based on viewport visibility
-  const videoObserver = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      const card = entry.target;
-      const video = card.querySelector('video.card-video');
-      
-      if (video) {
-        if (entry.isIntersecting) {
-          // Pause all other videos first
-          document.querySelectorAll('video.card-video').forEach(otherVideo => {
-            if (otherVideo !== video) {
-              otherVideo.pause();
-            }
-          });
-          
-          // Play the current video
-          video.play().catch(err => {
-            console.log('Autoplay was prevented by browser security:', err);
-          });
-        } else {
-          // Pause when leaving the viewport
-          video.pause();
-        }
-      }
-    });
-  }, { threshold: 0.5 }); // Trigger when 50% of the card is visible
+  const supportsHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
-  document.querySelectorAll('.grid .card').forEach(card => {
-    videoObserver.observe(card);
-  });
+  // 2. Play/Pause videos based on viewport visibility on hover-capable devices.
+  // On touch devices, playback starts only from the user's first tap.
+  if (supportsHover) {
+    const videoObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        const card = entry.target;
+        const video = card.querySelector('video.card-video');
+
+        if (video) {
+          if (entry.isIntersecting) {
+            // Pause all other videos first
+            document.querySelectorAll('video.card-video').forEach(otherVideo => {
+              if (otherVideo !== video) {
+                otherVideo.pause();
+              }
+            });
+
+            // Play the current video
+            video.play().catch(err => {
+              console.log('Autoplay was prevented by browser security:', err);
+            });
+          } else {
+            // Pause when leaving the viewport
+            video.pause();
+          }
+        }
+      });
+    }, { threshold: 0.5 }); // Trigger when 50% of the card is visible
+
+    document.querySelectorAll('.grid .card').forEach(card => {
+      videoObserver.observe(card);
+    });
+  }
 
   // 3. Click / Tap & Hover interaction for videos and animated images
   const cards = document.querySelectorAll('.grid .card');
@@ -74,7 +79,7 @@ import Contact from '../sections/Contact.astro';
     const img = card.querySelector('img.card-video');
 
     // Handle video items
-    if (video) {
+    if (video && supportsHover) {
       card.addEventListener('mouseenter', () => {
         video.currentTime = 0;
         document.querySelectorAll('video.card-video').forEach(otherVideo => {
@@ -91,7 +96,7 @@ import Contact from '../sections/Contact.astro';
     }
 
     // Handle animated WebP items with posters
-    if (img) {
+    if (img && supportsHover) {
       const animatedSrc = img.getAttribute('data-animated-src');
       const posterSrc = img.getAttribute('data-poster-src');
 
