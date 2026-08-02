@@ -16,25 +16,10 @@
   padding: 0 1.25rem;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   transition:
     color 0.45s ease,
     background-color 0.45s ease;
-}
-
-.navbar-mobile-brand {
-  width: 2.75rem;
-  height: 2.75rem;
-  display: grid;
-  place-items: center;
-  border-radius: 50%;
-
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    transition: filter 0.45s ease;
-  }
 }
 
 .navbar-menu-toggle {
@@ -44,7 +29,7 @@
   padding: 0;
   border: 0;
   background: transparent;
-  color: inherit;
+  color: $color-gray-100;
   font-family: $font-display;
   font-size: 1.25rem;
   font-weight: 500;
@@ -81,10 +66,8 @@
   overflow-y: auto;
   visibility: hidden;
   pointer-events: none;
-  color: $color-black;
-  background:
-    radial-gradient(circle at 78% 20%, rgba(217, 217, 217, 0.72), transparent 34%),
-    linear-gradient(145deg, $color-white 18%, #deddda 100%);
+  color: $color-gray-100;
+  background: $color-gray-900;
   clip-path: inset(0 0 100% 0);
   transition:
     clip-path 0.65s cubic-bezier(0.76, 0, 0.24, 1),
@@ -144,9 +127,9 @@
 .navbar-mobile-index {
   align-self: center;
   font-family: $font-primary;
-  font-size: 0.625rem;
+  font-size: 0.8rem;
   font-weight: 500;
-  color: rgba(5, 5, 5, 0.5);
+  color: rgba(255, 255, 255, 0.32);
 }
 
 .navbar-mobile-title {
@@ -161,13 +144,13 @@
 .navbar-mobile-description {
   align-self: center;
   font-family: $font-primary;
-  font-size: 0.5625rem;
+  font-size: 0.8rem;
   font-weight: 500;
   line-height: 1.2;
   letter-spacing: 0.08em;
   text-align: right;
   text-transform: uppercase;
-  color: rgba(5, 5, 5, 0.62);
+  color: rgba(255, 255, 255, 0.32);
 }
 
 .navbar-mobile-footer {
