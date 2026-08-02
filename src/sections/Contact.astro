@@ -1,26 +1,28 @@
----
-// Conversational Contact Section for DAM
-const API_URL = import.meta.env.PUBLIC_API_URL || import.meta.env.VITE_API_URL || "http://localhost:3000/api";
----
 <section class="contact" id="contact">
-  <div class="contact-card">
-    <!-- Step 0: Welcome / Header -->
+  <form class="contact-card" id="contact-form" novalidate>
     <div class="contact-step active" data-step="0">
       <h2 class="section-title contact-title">Conversemos</h2>
       <p class="contact-lead-text">Demos forma a tu próxima pieza cinematográfica.</p>
-      <p class="contact-lead-text">Cuéntanos sobre tu proyecto y agendemos una reunión.</p>
+      <p class="contact-lead-text">Cuéntanos tu idea y te responderemos para conversar sobre ella.</p>
       <div class="contact-actions">
         <button class="button button--primary btn-start" type="button">Comenzar</button>
       </div>
     </div>
 
-    <!-- Step 1: Nombre -->
     <div class="contact-step" data-step="1">
       <h2 class="contact-question">¿Con quién tenemos el placer de hablar?</h2>
       <div class="field">
         <label class="field-label" for="form-name">Nombre</label>
-        <input class="field-control" id="form-name" type="text" placeholder="Tu nombre y apellido" required />
-        <span class="error-msg" id="error-name">El nombre es obligatorio para iniciar.</span>
+        <input
+          class="field-control"
+          id="form-name"
+          name="name"
+          type="text"
+          placeholder="Tu nombre y apellido"
+          autocomplete="name"
+          required
+        />
+        <span class="error-msg" id="error-name" role="alert">Ingresa tu nombre para continuar.</span>
       </div>
       <div class="contact-actions">
         <button class="button button--ghost btn-back" type="button">Atrás</button>
@@ -28,13 +30,19 @@ const API_URL = import.meta.env.PUBLIC_API_URL || import.meta.env.VITE_API_URL |
       </div>
     </div>
 
-    <!-- Step 2: Idea -->
     <div class="contact-step" data-step="2">
       <h2 class="contact-question" id="question-step2">¿Cuál es la visión o historia que quieres contar?</h2>
       <div class="field">
-        <label class="field-label" for="form-project">Tu idea o visión</label>
-        <textarea class="field-control" id="form-project" placeholder="Describe el proyecto, la marca o la idea cinematográfica que tienes en mente..." rows="4" required></textarea>
-        <span class="error-msg" id="error-project">Por favor, comparte un poco de tu visión con nosotros.</span>
+        <label class="field-label" for="form-project">Tu idea o proyecto</label>
+        <textarea
+          class="field-control"
+          id="form-project"
+          name="project"
+          placeholder="Describe el proyecto, la marca o la historia que tienes en mente..."
+          rows="4"
+          required
+        ></textarea>
+        <span class="error-msg" id="error-project" role="alert">Cuéntanos un poco sobre tu proyecto.</span>
       </div>
       <div class="contact-actions">
         <button class="button button--ghost btn-back" type="button">Atrás</button>
@@ -42,508 +50,235 @@ const API_URL = import.meta.env.PUBLIC_API_URL || import.meta.env.VITE_API_URL |
       </div>
     </div>
 
-    <!-- Step 3: Contacto -->
     <div class="contact-step" data-step="3">
-      <h2 class="contact-question">¿Dónde podemos conectar para profundizar en los detalles?</h2>
+      <h2 class="contact-question">¿Dónde podemos responderte?</h2>
       <div class="field">
-        <label class="field-label" for="form-email">Correo de contacto</label>
-        <input class="field-control" id="form-email" type="email" placeholder="nombre@ejemplo.com" required />
-        <span class="error-msg" id="error-email">Ingresa un correo electrónico válido.</span>
+        <label class="field-label" for="form-email">Correo</label>
+        <input
+          class="field-control"
+          id="form-email"
+          name="email"
+          type="email"
+          placeholder="nombre@ejemplo.com"
+          autocomplete="email"
+          required
+        />
+        <span class="error-msg" id="error-email" role="alert">Ingresa un correo electrónico válido.</span>
       </div>
-      <div class="field" style="margin-top: 1.5rem;">
-        <label class="field-label" for="form-phone">Teléfono de contacto</label>
-        <input class="field-control" id="form-phone" type="tel" placeholder="+56 9 1234 5678" required />
-        <span class="error-msg" id="error-phone">Un número de teléfono es requerido.</span>
+      <div class="field contact-phone-field">
+        <label class="field-label" for="form-phone">Teléfono <span>(opcional)</span></label>
+        <input
+          class="field-control"
+          id="form-phone"
+          name="phone"
+          type="tel"
+          placeholder="+56 9 1234 5678"
+          autocomplete="tel"
+        />
       </div>
       <div class="contact-actions">
         <button class="button button--ghost btn-back" type="button">Atrás</button>
-        <button class="button button--primary btn-next" type="button">Continuar</button>
+        <button class="button button--primary btn-next" type="button">Revisar mensaje</button>
       </div>
     </div>
 
-    <!-- Step 4: Calendario -->
     <div class="contact-step" data-step="4">
-      <h2 class="contact-question">¿Qué día agendamos una llamada de exploración?</h2>
-      <div class="calendar-wrapper">
-        <div class="calendar-header">
-          <button class="btn-cal-prev" type="button">&larr;</button>
-          <span class="calendar-current-month" id="cal-month-year">Junio 2026</span>
-          <button class="btn-cal-next" type="button">&rarr;</button>
-        </div>
-        <div class="calendar-grid-weekdays">
-          <span>Dom</span><span>Lun</span><span>Mar</span><span>Mié</span><span>Jue</span><span>Vie</span><span>Sáb</span>
-        </div>
-        <div class="calendar-grid-days" id="calendar-days">
-          <!-- Dinámico -->
-        </div>
-      </div>
-      <span class="error-msg" id="error-date">Por favor, selecciona una fecha.</span>
-      <div class="contact-actions">
-        <button class="button button--ghost btn-back" type="button">Atrás</button>
-        <button class="button button--primary btn-next" type="button" id="btn-step4-next" disabled>Continuar</button>
-      </div>
-    </div>
-
-    <!-- Step 5: Horario -->
-    <div class="contact-step" data-step="5">
-      <h2 class="contact-question">Selecciona una hora para reunirnos</h2>
-      <div class="time-slots-container" id="time-slots">
-        <!-- Dinámico -->
-      </div>
-      <span class="error-msg" id="error-time">Por favor, selecciona un horario.</span>
-      <div class="contact-actions">
-        <button class="button button--ghost btn-back" type="button">Atrás</button>
-        <button class="button button--primary btn-next" type="button" id="btn-step5-next" disabled>Continuar</button>
-      </div>
-    </div>
-
-    <!-- Step 6: Resumen -->
-    <div class="contact-step" data-step="6">
-      <h2 class="contact-question">Detalles de nuestra próxima reunión</h2>
+      <h2 class="contact-question">Tu mensaje para DAM</h2>
       <div class="summary-card">
-        <div class="summary-row"><span class="summary-label">Nombre:</span><span class="summary-value" id="sum-name">-</span></div>
-        <div class="summary-row"><span class="summary-label">Visión:</span><span class="summary-value" id="sum-project">-</span></div>
-        <div class="summary-row"><span class="summary-label">Correo:</span><span class="summary-value" id="sum-email">-</span></div>
-        <div class="summary-row"><span class="summary-label">Teléfono:</span><span class="summary-value" id="sum-phone">-</span></div>
-        <div class="summary-row"><span class="summary-label">Fecha:</span><span class="summary-value" id="sum-date">-</span></div>
-        <div class="summary-row"><span class="summary-label">Horario:</span><span class="summary-value" id="sum-time">-</span></div>
+        <div class="summary-row"><span class="summary-label">Nombre</span><span class="summary-value" id="sum-name">-</span></div>
+        <div class="summary-row"><span class="summary-label">Proyecto</span><span class="summary-value" id="sum-project">-</span></div>
+        <div class="summary-row"><span class="summary-label">Correo</span><span class="summary-value" id="sum-email">-</span></div>
+        <div class="summary-row"><span class="summary-label">Teléfono</span><span class="summary-value" id="sum-phone">-</span></div>
       </div>
-      <span class="error-msg" id="error-submit">Hubo un problema al guardar tu reserva. Por favor, intenta de nuevo.</span>
+      <span class="error-msg error-submit" id="error-submit" role="alert" aria-live="polite">
+        No pudimos enviar tu mensaje. Intenta nuevamente.
+      </span>
       <div class="contact-actions">
         <button class="button button--ghost btn-back" type="button">Atrás</button>
-        <button class="button button--primary btn-confirm" type="button" id="btn-confirm-booking">Agendar reunión</button>
+        <button class="button button--primary btn-confirm" type="submit">Enviar mensaje</button>
       </div>
     </div>
 
-    <!-- Step 7: Confirmación -->
-    <div class="contact-step" data-step="7">
-      <h2 class="section-title contact-title">En marcha.</h2>
-      <p class="contact-lead-text">Hemos recibido tus detalles. Nos comunicaremos contigo para confirmar nuestra reunión y comenzar a dar forma a tu proyecto.</p>
+    <div class="contact-step" data-step="5">
+      <h2 class="section-title contact-title">Mensaje enviado.</h2>
+      <p class="contact-lead-text">Gracias por compartir tu proyecto. Revisaremos los detalles y nos comunicaremos contigo.</p>
       <div class="contact-actions">
-        <button class="button button--primary btn-restart" type="button">Volver al inicio</button>
+        <button class="button button--primary btn-restart" type="button">Enviar otro mensaje</button>
       </div>
     </div>
-  </div>
+
+    <div class="contact-honeypot" aria-hidden="true">
+      <label for="form-website">Sitio web</label>
+      <input id="form-website" name="website" type="text" tabindex="-1" autocomplete="off" />
+    </div>
+  </form>
 </section>
 
-<script define:vars={{ API_URL }}>
-  // Constantes de configuración API de Agenda
-  const BUSINESS_ID = "6a4d3bd9ea90bdf17f2c1be6";
-  const WORKER_ID = "6a4d3ffc2efdfcbc0ac7ba82";
-  const SERVICE_ID = "6a4d3ffd2efdfcbc0ac7baa6";
-  const API_BASE = API_URL;
+<script>
+  const form = document.querySelector<HTMLFormElement>('#contact-form');
+  const steps = document.querySelectorAll<HTMLElement>('.contact-step');
+  const submitButton = document.querySelector<HTMLButtonElement>('.btn-confirm');
+  const submitError = document.querySelector<HTMLElement>('#error-submit');
 
-  const MONTH_NAMES = [
-    "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
-    "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
-  ];
-
-  // Estado del formulario
   let currentStep = 0;
   const formData = {
-    name: "",
-    project: "",
-    email: "",
-    phone: "",
-    date: "", // YYYY-MM-DD
-    time: ""  // HH:MM
+    name: '',
+    project: '',
+    email: '',
+    phone: '',
   };
 
-  // Objeto Date para el control visual del calendario
-  let calDate = new Date();
-
-  // Elementos del DOM
-  const steps = document.querySelectorAll('.contact-step');
-  const calendarDays = document.getElementById('calendar-days');
-  const calMonthYear = document.getElementById('cal-month-year');
-  const prevCalBtn = document.querySelector('.btn-cal-prev');
-  const nextCalBtn = document.querySelector('.btn-cal-next');
-
-  // Inicialización de la visibilidad
   function initSteps() {
-    steps.forEach((step, idx) => {
-      if (idx === 0) {
-        step.style.display = 'flex';
-        step.classList.add('active');
-      } else {
-        step.style.display = 'none';
-        step.classList.remove('active');
-      }
+    steps.forEach((step, index) => {
+      step.style.display = index === 0 ? 'flex' : 'none';
+      step.classList.toggle('active', index === 0);
     });
   }
 
-  // Transición suave entre pantallas
   function goToStep(stepIndex) {
-    const activeStep = document.querySelector('.contact-step.active');
-    const targetStep = document.querySelector(`.contact-step[data-step="${stepIndex}"]`);
+    const activeStep = document.querySelector<HTMLElement>('.contact-step.active');
+    const targetStep = document.querySelector<HTMLElement>(`.contact-step[data-step="${stepIndex}"]`);
+    if (!targetStep || targetStep === activeStep) return;
 
-    if (!targetStep) return;
+    document.querySelectorAll<HTMLElement>('.error-msg').forEach((error) => {
+      error.style.display = 'none';
+    });
 
-    if (activeStep) {
-      activeStep.classList.remove('active');
-      setTimeout(() => {
-        activeStep.style.display = 'none';
-        targetStep.style.display = 'flex';
-        setTimeout(() => {
-          targetStep.classList.add('active');
-        }, 50);
-      }, 300);
-    } else {
+    activeStep?.classList.remove('active');
+    window.setTimeout(() => {
+      if (activeStep) activeStep.style.display = 'none';
       targetStep.style.display = 'flex';
-      setTimeout(() => {
-        targetStep.classList.add('active');
-      }, 50);
-    }
+      window.requestAnimationFrame(() => targetStep.classList.add('active'));
+    }, 250);
 
     currentStep = stepIndex;
 
-    // Resetear mensajes de error
-    document.querySelectorAll('.error-msg').forEach(el => el.style.display = 'none');
-
-    // Inicializaciones específicas por paso
     if (stepIndex === 2) {
-      const qElement = document.getElementById('question-step2');
-      if (qElement) {
-        qElement.textContent = `${formData.name}, ¿cuál es la visión o historia que quieres contar?`;
-      }
-    } else if (stepIndex === 4) {
-      renderCalendar();
-    } else if (stepIndex === 6) {
-      renderSummary();
+      const question = document.querySelector<HTMLElement>('#question-step2');
+      if (question) question.textContent = `${formData.name}, ¿cuál es la visión o historia que quieres contar?`;
     }
+
+    if (stepIndex === 4) renderSummary();
   }
 
-  // Validaciones
   function validateCurrentStep() {
     if (currentStep === 1) {
-      const nameVal = document.getElementById('form-name').value.trim();
-      if (!nameVal) {
-        document.getElementById('error-name').style.display = 'block';
+      const name = document.querySelector<HTMLInputElement>('#form-name')?.value.trim() || '';
+      if (!name) {
+        document.querySelector<HTMLElement>('#error-name')?.style.setProperty('display', 'block');
         return false;
       }
-      formData.name = nameVal;
-    } else if (currentStep === 2) {
-      const projectVal = document.getElementById('form-project').value.trim();
-      if (!projectVal) {
-        document.getElementById('error-project').style.display = 'block';
-        return false;
-      }
-      formData.project = projectVal;
-    } else if (currentStep === 3) {
-      const emailVal = document.getElementById('form-email').value.trim();
-      const phoneVal = document.getElementById('form-phone').value.trim();
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      let valid = true;
-
-      if (!emailRegex.test(emailVal)) {
-        document.getElementById('error-email').style.display = 'block';
-        valid = false;
-      }
-      if (!phoneVal) {
-        document.getElementById('error-phone').style.display = 'block';
-        valid = false;
-      }
-      if (!valid) return false;
-
-      formData.email = emailVal;
-      formData.phone = phoneVal;
-    } else if (currentStep === 4) {
-      if (!formData.date) {
-        document.getElementById('error-date').style.display = 'block';
-        return false;
-      }
-    } else if (currentStep === 5) {
-      if (!formData.time) {
-        document.getElementById('error-time').style.display = 'block';
-        return false;
-      }
+      formData.name = name;
     }
+
+    if (currentStep === 2) {
+      const project = document.querySelector<HTMLTextAreaElement>('#form-project')?.value.trim() || '';
+      if (project.length < 10) {
+        document.querySelector<HTMLElement>('#error-project')?.style.setProperty('display', 'block');
+        return false;
+      }
+      formData.project = project;
+    }
+
+    if (currentStep === 3) {
+      const email = document.querySelector<HTMLInputElement>('#form-email')?.value.trim() || '';
+      const phone = document.querySelector<HTMLInputElement>('#form-phone')?.value.trim() || '';
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+      if (!emailPattern.test(email)) {
+        document.querySelector<HTMLElement>('#error-email')?.style.setProperty('display', 'block');
+        return false;
+      }
+
+      formData.email = email;
+      formData.phone = phone;
+    }
+
     return true;
   }
 
-  // Generar y renderizar el calendario (Rango: Próximos 30 días, sin fines de semana, sin días pasados)
-  function renderCalendar() {
-    if (!calendarDays || !calMonthYear) return;
-
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-
-    const maxDate = new Date(today);
-    maxDate.setDate(maxDate.getDate() + 30);
-
-    const year = calDate.getFullYear();
-    const month = calDate.getMonth();
-
-    // Actualizar encabezado de mes
-    calMonthYear.textContent = `${MONTH_NAMES[month]} ${year}`;
-
-    // Deshabilitar paginación fuera de rango
-    prevCalBtn.disabled = (year === today.getFullYear() && month === today.getMonth());
-    nextCalBtn.disabled = (year === maxDate.getFullYear() && month === maxDate.getMonth());
-
-    // Limpiar celdas anteriores
-    calendarDays.innerHTML = '';
-
-    const firstDayIndex = new Date(year, month, 1).getDay();
-    const totalDays = new Date(year, month + 1, 0).getDate();
-
-    // Celdas vacías previas
-    for (let i = 0; i < firstDayIndex; i++) {
-      const span = document.createElement('span');
-      calendarDays.appendChild(span);
-    }
-
-    // Celdas de días
-    for (let day = 1; day <= totalDays; day++) {
-      const cellDate = new Date(year, month, day);
-      const cellDateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-
-      const btn = document.createElement('button');
-      btn.type = 'button';
-      btn.className = 'calendar-day';
-      btn.textContent = day;
-
-      const isPast = cellDate < today;
-      const isTooFar = cellDate > maxDate;
-      const isWeekend = cellDate.getDay() === 0 || cellDate.getDay() === 6; // 0: Dom, 6: Sáb
-
-      if (isPast || isTooFar || isWeekend) {
-        btn.disabled = true;
-        btn.classList.add('disabled');
-      } else {
-        if (formData.date === cellDateStr) {
-          btn.classList.add('selected');
-        }
-
-        btn.addEventListener('click', () => {
-          document.querySelectorAll('.calendar-day.selected').forEach(el => el.classList.remove('selected'));
-          btn.classList.add('selected');
-          formData.date = cellDateStr;
-          formData.time = ""; // Resetear horario al cambiar la fecha
-          document.getElementById('btn-step4-next').disabled = false;
-
-          // Cargar slots en segundo plano
-          fetchTimeSlots(cellDateStr);
-        });
-      }
-
-      calendarDays.appendChild(btn);
-    }
-  }
-
-  // Obtener slots de disponibilidad del servidor Express (Agenda API)
-  async function fetchTimeSlots(dateStr) {
-    const slotsContainer = document.getElementById('time-slots');
-    const nextBtn = document.getElementById('btn-step5-next');
-    if (!slotsContainer || !nextBtn) return;
-
-    slotsContainer.innerHTML = '<div class="loading-slots">Consultando horarios disponibles...</div>';
-    nextBtn.disabled = true;
-
-    try {
-      const url = `${API_BASE}/availability/slots?workerId=${WORKER_ID}&serviceId=${SERVICE_ID}&date=${dateStr}&businessId=${BUSINESS_ID}`;
-      const res = await fetch(url);
-      if (!res.ok) throw new Error();
-
-      const data = await res.json();
-      const slots = data.payload || [];
-
-      // Filtrar sólo disponibles
-      const availableSlots = slots.filter(s => s.available);
-
-      if (availableSlots.length === 0) {
-        slotsContainer.innerHTML = '<div class="no-slots">No quedan horarios de consulta disponibles para este día. Por favor, selecciona otra fecha.</div>';
-        return;
-      }
-
-      slotsContainer.innerHTML = '';
-      availableSlots.forEach(slot => {
-        const btn = document.createElement('button');
-        btn.type = 'button';
-        btn.className = 'time-slot-btn';
-        btn.textContent = slot.startTime;
-
-        if (formData.time === slot.startTime) {
-          btn.classList.add('selected');
-          nextBtn.disabled = false;
-        }
-
-        btn.addEventListener('click', () => {
-          document.querySelectorAll('.time-slot-btn.selected').forEach(el => el.classList.remove('selected'));
-          btn.classList.add('selected');
-          formData.time = slot.startTime;
-          nextBtn.disabled = false;
-        });
-
-        slotsContainer.appendChild(btn);
-      });
-
-    } catch (err) {
-      console.error(err);
-      slotsContainer.innerHTML = '<div class="error-slots">No pudimos conectar con el servidor de agenda. Asegúrate de que el servidor esté corriendo en el puerto 3000.</div>';
-    }
-  }
-
-  // Renderizar resumen
   function renderSummary() {
-    document.getElementById('sum-name').textContent = formData.name;
-    document.getElementById('sum-project').textContent = formData.project;
-    document.getElementById('sum-email').textContent = formData.email;
-    document.getElementById('sum-phone').textContent = formData.phone;
-
-    // Formatear fecha legible
-    if (formData.date) {
-      const [y, m, d] = formData.date.split('-').map(Number);
-      const dateObj = new Date(y, m - 1, d);
-      const formattedDate = `${dateObj.getDate()} de ${MONTH_NAMES[dateObj.getMonth()]}, ${dateObj.getFullYear()}`;
-      document.getElementById('sum-date').textContent = formattedDate;
-    } else {
-      document.getElementById('sum-date').textContent = "-";
-    }
-
-    document.getElementById('sum-time').textContent = formData.time ? `${formData.time} hrs` : "-";
-  }
-
-  // Enviar agendamiento (Crear cita en la API de Agenda)
-  async function submitAppointment() {
-    const confirmBtn = document.getElementById('btn-confirm-booking');
-    const submitError = document.getElementById('error-submit');
-    if (!confirmBtn || !submitError) return;
-
-    confirmBtn.disabled = true;
-    confirmBtn.textContent = "Confirmando...";
-    submitError.style.display = "none";
-
-    // Separar nombre y apellido
-    const nameParts = formData.name.trim().split(/\s+/);
-    const firstName = nameParts[0] || "";
-    const lastName = nameParts.slice(1).join(" ") || ".";
-
-    const bodyData = {
-      worker: WORKER_ID,
-      service: SERVICE_ID,
-      date: formData.date,
-      startTime: formData.time,
-      notes: formData.project,
-      clientInfo: {
-        firstName,
-        lastName,
-        email: formData.email,
-        phone: formData.phone
-      }
+    const values = {
+      '#sum-name': formData.name,
+      '#sum-project': formData.project,
+      '#sum-email': formData.email,
+      '#sum-phone': formData.phone || 'No indicado',
     };
 
+    Object.entries(values).forEach(([selector, value]) => {
+      const element = document.querySelector<HTMLElement>(selector);
+      if (element) element.textContent = value;
+    });
+  }
+
+  async function submitContact() {
+    if (!submitButton || !submitError) return;
+
+    submitButton.disabled = true;
+    submitButton.textContent = 'Enviando...';
+    submitError.style.display = 'none';
+
     try {
-      const res = await fetch(`${API_BASE}/appointments`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "X-Business-Id": BUSINESS_ID
-        },
-        body: JSON.stringify(bodyData)
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ...formData,
+          website: document.querySelector<HTMLInputElement>('#form-website')?.value || '',
+        }),
       });
 
-      const data = await res.json();
-      if (!res.ok) {
-        throw new Error(data.message || "Error al crear la cita");
-      }
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok) throw new Error(result.message || 'No se pudo enviar el mensaje.');
 
-      goToStep(7);
-    } catch (err) {
-      console.error(err);
-      submitError.textContent = `Error: ${err.message || 'No se pudo registrar la reserva. Intenta de nuevo.'}`;
-      submitError.style.display = "block";
+      goToStep(5);
+    } catch (error) {
+      console.error(error);
+      submitError.textContent = error instanceof Error
+        ? error.message
+        : 'No pudimos enviar tu mensaje. Intenta nuevamente.';
+      submitError.style.display = 'block';
     } finally {
-      confirmBtn.disabled = false;
-      confirmBtn.textContent = "Confirmar conversación";
+      submitButton.disabled = false;
+      submitButton.textContent = 'Enviar mensaje';
     }
   }
 
-  // Limpiar y resetear el formulario
   function resetForm() {
-    formData.name = "";
-    formData.project = "";
-    formData.email = "";
-    formData.phone = "";
-    formData.date = "";
-    formData.time = "";
-
-    const nameInput = document.getElementById('form-name');
-    const projectInput = document.getElementById('form-project');
-    const emailInput = document.getElementById('form-email');
-    const phoneInput = document.getElementById('form-phone');
-
-    if (nameInput) nameInput.value = "";
-    if (projectInput) projectInput.value = "";
-    if (emailInput) emailInput.value = "";
-    if (phoneInput) phoneInput.value = "";
-
-    const step4Next = document.getElementById('btn-step4-next');
-    const step5Next = document.getElementById('btn-step5-next');
-    if (step4Next) step4Next.disabled = true;
-    if (step5Next) step5Next.disabled = true;
-
-    calDate = new Date();
+    form?.reset();
+    for (const key of Object.keys(formData) as Array<keyof typeof formData>) {
+      formData[key] = '';
+    }
     goToStep(0);
   }
 
-  // Inicializar Event Listeners
   document.addEventListener('DOMContentLoaded', () => {
     initSteps();
 
-    // Botones de inicio
-    document.querySelectorAll('.btn-start').forEach(btn => {
-      btn.addEventListener('click', () => goToStep(1));
-    });
+    document.querySelector('.btn-start')?.addEventListener('click', () => goToStep(1));
 
-    // Botones continuar
-    document.querySelectorAll('.btn-next').forEach(btn => {
-      btn.addEventListener('click', () => {
-        if (validateCurrentStep()) {
-          goToStep(currentStep + 1);
-        }
+    document.querySelectorAll('.btn-next').forEach((button) => {
+      button.addEventListener('click', () => {
+        if (validateCurrentStep()) goToStep(currentStep + 1);
       });
     });
 
-    // Botones atrás
-    document.querySelectorAll('.btn-back').forEach(btn => {
-      btn.addEventListener('click', () => {
-        goToStep(currentStep - 1);
-      });
+    document.querySelectorAll('.btn-back').forEach((button) => {
+      button.addEventListener('click', () => goToStep(currentStep - 1));
     });
 
-    // Botón confirmar
-    const confirmBtn = document.getElementById('btn-confirm-booking');
-    if (confirmBtn) {
-      confirmBtn.addEventListener('click', submitAppointment);
-    }
+    document.querySelector('.btn-restart')?.addEventListener('click', resetForm);
 
-    // Botón reiniciar
-    document.querySelectorAll('.btn-restart').forEach(btn => {
-      btn.addEventListener('click', resetForm);
+    form?.addEventListener('submit', (event) => {
+      event.preventDefault();
+      if (currentStep === 4) submitContact();
     });
 
-    // Paginación calendario
-    if (prevCalBtn && nextCalBtn) {
-      prevCalBtn.addEventListener('click', () => {
-        calDate.setMonth(calDate.getMonth() - 1);
-        renderCalendar();
-      });
-      nextCalBtn.addEventListener('click', () => {
-        calDate.setMonth(calDate.getMonth() + 1);
-        renderCalendar();
-      });
-    }
-
-    // Accesibilidad teclado (Enter en inputs)
-    const inputs = document.querySelectorAll('.field-control');
-    inputs.forEach(input => {
-      input.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' && input.tagName !== 'TEXTAREA') {
-          e.preventDefault();
-          const stepDiv = input.closest('.contact-step');
-          const nextBtn = stepDiv.querySelector('.btn-next');
-          if (nextBtn) nextBtn.click();
+    document.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>('.field-control').forEach((input) => {
+      input.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' && input.tagName !== 'TEXTAREA') {
+          event.preventDefault();
+          input.closest('.contact-step')?.querySelector<HTMLButtonElement>('.btn-next')?.click();
         }
       });
     });
