@@ -33,13 +33,15 @@
   display: flex;
   flex-direction: column;
   position: relative;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid rgba(255 255 255/15%);
   padding-bottom: $space-2;
-  
+
   // Smooth fade in on scroll
   opacity: 0;
   transform: translateY(20px);
-  transition: opacity 0.8s ease, transform 0.8s ease;
+  transition:
+    opacity 0.8s ease,
+    transform 0.8s ease;
 
   &.visible {
     opacity: 1;
@@ -82,10 +84,10 @@
 
 .about-num {
   font-family: $font-display;
-  font-size: 2.2rem;
+  font-size: 0.8rem;
   line-height: 1;
   color: rgba(255, 255, 255, 0.32);
-  
+
   @media (min-width: $bp-tablet) {
     font-size: 3rem;
     margin-bottom: $space-2;
@@ -93,8 +95,8 @@
 }
 
 .about-subtitle {
-  font-family: $font-primary;
-  font-size: $font-size-md;
+  font-family: $font-display;
+  font-size: clamp(2rem, 10vw, 2rem);
   text-transform: uppercase;
   letter-spacing: 0.2em;
   color: $color-white;
@@ -111,7 +113,9 @@
   font-size: 1.5rem;
   font-weight: 300;
   color: rgba(255, 255, 255, 0.4);
-  transition: transform 0.4s ease, color 0.3s ease;
+  transition:
+    transform 0.4s ease,
+    color 0.3s ease;
   line-height: 1;
 
   @media (min-width: $bp-tablet) {
@@ -130,7 +134,9 @@
   max-height: 0;
   overflow: hidden;
   opacity: 0;
-  transition: max-height 0.4s ease-out, opacity 0.3s ease-out;
+  transition:
+    max-height 0.4s ease-out,
+    opacity 0.3s ease-out;
 
   @media (min-width: $bp-tablet) {
     max-height: none;
