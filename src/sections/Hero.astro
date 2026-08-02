@@ -1,14 +1,27 @@
 <section class="hero" id="hero">
-  <video class="hero-media" autoplay muted loop playsinline>
-    <source src="/video.mp4" type="video/mp4" />
-  </video>
+  <video
+    class="hero-media"
+    src="/videos/DRONLOGT1.mov"
+    autoplay
+    muted
+    loop
+    playsinline
+  ></video>
 
   <div class="hero-overlay"></div>
 
   <div class="hero-content">
     <h1 class="hero-title">
-      <img src="/svg/logodamlunablanca.svg" alt="DAM" class="hero-logo" />
+      <picture class="hero-logo-picture">
+        <source media="(max-width: 767px)" srcset="/svg/logoheromovil.svg" />
+        <img
+          src="/svg/logoherodesk.svg"
+          alt="DAM Films"
+          class="hero-logo"
+          decoding="async"
+          fetchpriority="high"
+        />
+      </picture>
     </h1>
-    
   </div>
 </section>
