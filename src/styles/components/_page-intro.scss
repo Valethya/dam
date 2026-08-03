@@ -1,0 +1,64 @@
+@use "../abstracts/variables" as *;
+
+html.page-intro-active,
+html.page-intro-active body {
+  overflow: hidden;
+}
+
+.page-intro {
+  position: fixed;
+  z-index: 1000;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  pointer-events: auto;
+  touch-action: none;
+}
+
+.page-intro__iris {
+  width: 0;
+  height: 0;
+  display: block;
+  flex: none;
+  border-radius: 50%;
+  background: transparent;
+  box-shadow:
+    0 0 0 200vmax $color-black,
+    0 0 5rem 2rem rgba(0, 0, 0, 0.92);
+  will-change: width, height;
+}
+
+.page-intro.is-opening {
+  pointer-events: none;
+  animation: page-intro-fade 1.65s ease-out forwards;
+
+  .page-intro__iris {
+    animation: page-intro-iris-open 1.65s cubic-bezier(0.76, 0, 0.24, 1) forwards;
+  }
+}
+
+@keyframes page-intro-iris-open {
+  to {
+    width: 220vmax;
+    height: 220vmax;
+  }
+}
+
+@keyframes page-intro-fade {
+  0%,
+  62% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-intro.is-opening,
+  .page-intro.is-opening .page-intro__iris {
+    animation-duration: 0.01ms;
+  }
+}
