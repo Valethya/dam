@@ -155,17 +155,18 @@
 @media (min-width: $bp-tablet) {
   .contact {
     width: 70%;
+    min-height: calc(100dvh - 5.125rem);
     padding: $space-6 $container-padding;
   }
 
   .contact-card {
     max-width: 680px;
-    min-height: 620px;
+    min-height: calc(100dvh - 5.125rem);
     padding: $space-6;
   }
 
   .contact-step {
-    min-height: 500px;
+    min-height: calc(100dvh - 5.125rem - #{$space-6 * 2});
   }
 
   .field {
