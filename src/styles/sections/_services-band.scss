@@ -2,10 +2,10 @@
 
 .services-band {
   width: 100%;
-  min-height: 4.5rem;
+  padding: 2rem 1.25rem;
   display: flex;
   align-items: center;
-  overflow: hidden;
+  justify-content: center;
   border-top: 1px solid rgba(246, 244, 241, 0.16);
   border-bottom: 1px solid rgba(246, 244, 241, 0.16);
   background: $color-gray-900;
@@ -13,98 +13,68 @@
 }
 
 .services-band__track {
-  width: max-content;
-  display: flex;
-  animation: services-band-scroll 28s linear infinite;
-  will-change: transform;
+  width: 100%;
 }
 
 .services-band__group {
+  width: 100%;
   margin: 0;
-  padding: 0 1.5rem 0 0;
+  padding: 0;
   display: flex;
-  flex-shrink: 0;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 1.5rem;
+  justify-content: center;
+  gap: 0.8rem;
   list-style: none;
+  text-align: center;
 
   li {
-    display: flex;
-    flex-shrink: 0;
+    display: inline-flex;
+    flex: 0 0 auto;
     align-items: center;
-    gap: 1.5rem;
+    gap: 0.8rem;
     color: $color-white;
     font-family: $font-display;
-    font-size: clamp(1rem, 4.5vw, 1.25rem);
+    font-size: clamp(1rem, 4.6vw, 1.25rem);
     font-weight: 500;
-    line-height: 1;
-    letter-spacing: 0.09em;
+    line-height: 1.1;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
     white-space: nowrap;
 
-    &::after {
+    &:not(:last-child)::after {
       content: "·";
       color: rgba(246, 244, 241, 0.45);
     }
   }
 }
 
-.services-band:hover .services-band__track {
-  animation-play-state: paused;
-}
+@media (min-width: $bp-tablet) {
+  .services-band {
+    padding: 2.75rem 2rem;
+  }
 
-@keyframes services-band-scroll {
-  to {
-    transform: translateX(-50%);
+  .services-band__group {
+    gap: 1rem 1.25rem;
+
+    li {
+      gap: 1.25rem;
+      font-size: clamp(1.2rem, 2.5vw, 1.65rem);
+    }
   }
 }
 
 @media (min-width: $bp-desktop) {
   .services-band {
-    min-height: 6rem;
+    padding: 3.5rem clamp(2rem, 4vw, 5rem);
   }
 
-  .services-band__track {
-    width: 100%;
-    animation: none;
-  }
-
-  .services-band__group:first-child {
-    width: 100%;
-    padding: 0 2rem;
-    justify-content: center;
-    gap: clamp(1rem, 1.8vw, 2rem);
+  .services-band__group {
+    gap: 1.25rem clamp(1.25rem, 1.8vw, 2rem);
 
     li {
-      gap: clamp(1rem, 1.8vw, 2rem);
-      font-size: clamp(0.9rem, 1.25vw, 1.25rem);
+      gap: clamp(1.25rem, 1.8vw, 2rem);
+      font-size: clamp(1.5rem, 1.8vw, 2.25rem);
     }
-
-    li:last-child::after {
-      display: none;
-    }
-  }
-
-  .services-band__group[aria-hidden="true"] {
-    display: none;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .services-band {
-    overflow-x: auto;
-    scrollbar-width: none;
-
-    &::-webkit-scrollbar {
-      display: none;
-    }
-  }
-
-  .services-band__track {
-    animation: none;
-  }
-
-  .services-band__group[aria-hidden="true"] {
-    display: none;
   }
 }
