@@ -2,25 +2,44 @@
 import '../styles/main.scss';
 ---
 
-<main class="error-main">
-  <section class="error-page" aria-labelledby="error-message">
-    <div class="error-content-video" aria-hidden="true">
-      <video
-        class="error-video"
-        autoplay
-        muted
-        loop
-        playsinline
-        preload="auto"
-        src="/videos/pulpo.mp4"
-      ></video>
-    </div>
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="robots" content="noindex" />
+    <title>404 · DAM Films</title>
+    <link rel="icon" type="image/svg+xml" href="/svg/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&family=Oswald:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
 
-    <div class="error-copy">
-      <h1 class="error-message" id="error-message">
-        <span class="error-sr-only">Error 404. </span>Aquí no hay nada.
-      </h1>
-      <a href="/" class="error-back-link">Volver</a>
-    </div>
-  </section>
-</main>
+  <body>
+    <main class="error-main">
+      <section class="error-page" aria-labelledby="error-message">
+        <div class="error-content-video" aria-hidden="true">
+          <video
+            class="error-video"
+            autoplay
+            muted
+            loop
+            playsinline
+            preload="auto"
+            src="/videos/pulpo.mp4"
+          ></video>
+        </div>
+
+        <div class="error-copy">
+          <h1 class="error-message" id="error-message">
+            <span class="error-sr-only">Error 404. </span>No hay nada.
+          </h1>
+          <a href="/" class="error-back-link">Volver</a>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
