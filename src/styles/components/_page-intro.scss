@@ -1,53 +1,64 @@
 @use "../abstracts/variables" as *;
 
+@property --page-intro-radius {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: -28vmax;
+}
+
 html.page-intro-active,
 html.page-intro-active body {
   overflow: hidden;
 }
 
 .page-intro {
+  --page-intro-radius: -28vmax;
   position: fixed;
   z-index: 1000;
   inset: 0;
-  display: grid;
-  place-items: center;
   overflow: hidden;
   pointer-events: auto;
   touch-action: none;
+  background: $color-black;
+  -webkit-mask-image: radial-gradient(
+    circle at center,
+    transparent var(--page-intro-radius),
+    rgba(0, 0, 0, 0.12) calc(var(--page-intro-radius) + 5vmax),
+    rgba(0, 0, 0, 0.38) calc(var(--page-intro-radius) + 12vmax),
+    rgba(0, 0, 0, 0.72) calc(var(--page-intro-radius) + 20vmax),
+    #000 calc(var(--page-intro-radius) + 28vmax)
+  );
+  mask-image: radial-gradient(
+    circle at center,
+    transparent var(--page-intro-radius),
+    rgba(0, 0, 0, 0.12) calc(var(--page-intro-radius) + 5vmax),
+    rgba(0, 0, 0, 0.38) calc(var(--page-intro-radius) + 12vmax),
+    rgba(0, 0, 0, 0.72) calc(var(--page-intro-radius) + 20vmax),
+    #000 calc(var(--page-intro-radius) + 28vmax)
+  );
+  will-change: opacity, -webkit-mask-image, mask-image;
 }
 
 .page-intro__iris {
-  width: 0;
-  height: 0;
-  display: block;
-  flex: none;
-  border-radius: 50%;
-  background: transparent;
-  box-shadow:
-    0 0 0 200vmax $color-black,
-    0 0 5rem 2rem rgba(0, 0, 0, 0.92);
-  will-change: width, height;
+  display: none;
 }
 
 .page-intro.is-opening {
   pointer-events: none;
-  animation: page-intro-fade 1.65s ease-out forwards;
-
-  .page-intro__iris {
-    animation: page-intro-iris-open 1.65s cubic-bezier(0.76, 0, 0.24, 1) forwards;
-  }
+  animation:
+    page-intro-vignette-open 1.9s cubic-bezier(0.76, 0, 0.24, 1) forwards,
+    page-intro-fallback-fade 1.9s ease-out forwards;
 }
 
-@keyframes page-intro-iris-open {
+@keyframes page-intro-vignette-open {
   to {
-    width: 220vmax;
-    height: 220vmax;
+    --page-intro-radius: 115vmax;
   }
 }
 
-@keyframes page-intro-fade {
+@keyframes page-intro-fallback-fade {
   0%,
-  62% {
+  68% {
     opacity: 1;
   }
 
@@ -57,8 +68,7 @@ html.page-intro-active body {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .page-intro.is-opening,
-  .page-intro.is-opening .page-intro__iris {
+  .page-intro.is-opening {
     animation-duration: 0.01ms;
   }
 }
