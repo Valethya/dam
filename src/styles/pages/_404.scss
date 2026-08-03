@@ -1,34 +1,29 @@
 @use "../abstracts/variables" as *;
 
-.error-page {
-  min-height: 100vh;
-  box-sizing: border-box;
-  background: #0b0b0b; /* Rich dark background */
-  display: grid;
-  place-content: center;
-  justify-items: center;
-  border: none;
-  overflow: hidden;
+.error-main {
+  width: 100%;
+  min-height: 100dvh;
+  display: block;
+  background: #050203;
 }
 
-.error-link-wrapper {
-  display: block;
-  cursor: pointer;
-  text-decoration: none;
-  border: none;
-  outline: none;
-  transition: transform 0.4s ease;
-
-  &:hover {
-    transform: scale(1.03);
-  }
+.error-page {
+  width: 100%;
+  min-height: 100dvh;
+  padding: clamp(2rem, 5vh, 4rem) 1.25rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(1.5rem, 4vh, 3rem);
+  overflow: hidden;
+  background: #050203;
 }
 
 .error-content-video {
-  width: min(90vw, 900px);
+  width: min(92vw, 820px);
   aspect-ratio: 1000 / 700;
   overflow: hidden;
- 
   -webkit-mask: url("/svg/404.svg") center / 90% no-repeat;
   mask: url("/svg/404.svg") center / 90% no-repeat;
 }
@@ -38,18 +33,96 @@
   height: 100%;
   display: block;
   object-fit: cover;
-  filter: brightness(.75) contrast(1.05);
+  filter: brightness(0.75) contrast(1.05);
   animation: slow-zoom 25s infinite ease-in-out;
 }
 
+.error-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  text-align: center;
+}
+
+.error-message {
+  color: $color-white;
+  font-family: $font-display;
+  font-size: clamp(1.4rem, 5vw, 2rem);
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.error-back-link {
+  color: rgba(246, 244, 241, 0.72);
+  font-family: $font-primary;
+  font-size: $font-size-xs;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-decoration: none;
+  text-transform: uppercase;
+  border-bottom: 1px solid currentColor;
+  transition:
+    color 0.3s ease,
+    border-color 0.3s ease;
+
+  &:hover {
+    color: $color-white;
+  }
+
+  &:focus-visible {
+    outline: 2px solid $color-white;
+    outline-offset: 0.35rem;
+  }
+}
+
+.error-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 @keyframes slow-zoom {
-  0% {
+  0%,
+  100% {
     transform: scale(1);
   }
+
   50% {
     transform: scale(1.12);
   }
-  100% {
-    transform: scale(1);
+}
+
+@media (min-width: $bp-tablet) {
+  .error-content-video {
+    width: min(84vw, 900px);
+  }
+
+  .error-message {
+    font-size: clamp(1.75rem, 2.4vw, 2.35rem);
+  }
+}
+
+@media (max-height: 700px) {
+  .error-content-video {
+    width: min(78vw, 680px);
+  }
+
+  .error-page {
+    gap: 1rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .error-video {
+    animation: none;
   }
 }
