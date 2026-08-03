@@ -25,7 +25,7 @@ function cleanLine(value, maxLength) {
     .slice(0, maxLength);
 }
 
-export default async function contact(request) {
+async function contact(request) {
   if (request.method !== 'POST') {
     return json({ message: 'Método no permitido.' }, 405);
   }
@@ -116,3 +116,8 @@ export default async function contact(request) {
 
   return json({ ok: true }, 201);
 }
+
+
+export default {
+  fetch: contact,
+};
