@@ -1,0 +1,81 @@
+@use "../abstracts/variables" as *;
+
+.services-band {
+  width: 100%;
+  min-height: clamp(14rem, 28dvh, 18rem);
+  padding: 3rem 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: $color-gray-900;
+  color: $color-white;
+}
+
+.services-band__track {
+  width: 100%;
+}
+
+.services-band__group {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  list-style: none;
+  text-align: center;
+
+  li {
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    gap: 0.8rem;
+    color: $color-white;
+    font-family: $font-display;
+    font-size: clamp(1rem, 4.6vw, 1.25rem);
+    font-weight: 500;
+    line-height: 1.1;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    white-space: nowrap;
+
+    &:not(:last-child)::after {
+      content: "·";
+      color: rgba(246, 244, 241, 0.45);
+    }
+  }
+}
+
+@media (min-width: $bp-tablet) {
+  .services-band {
+    min-height: clamp(16rem, 30dvh, 22rem);
+    padding: 3.5rem 2rem;
+  }
+
+  .services-band__group {
+    gap: 1rem 1.25rem;
+
+    li {
+      gap: 1.25rem;
+      font-size: clamp(1.2rem, 2.5vw, 1.65rem);
+    }
+  }
+}
+
+@media (min-width: $bp-desktop) {
+  .services-band {
+    min-height: clamp(18rem, 34dvh, 26rem);
+    padding: 4rem clamp(2rem, 4vw, 5rem);
+  }
+
+  .services-band__group {
+    gap: 1.25rem clamp(1.25rem, 1.8vw, 2rem);
+
+    li {
+      gap: clamp(1.25rem, 1.8vw, 2rem);
+      font-size: clamp(1.5rem, 1.8vw, 2.25rem);
+    }
+  }
+}

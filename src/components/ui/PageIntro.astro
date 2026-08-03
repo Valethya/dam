@@ -1,0 +1,66 @@
+<div class="page-intro" aria-hidden="true">
+  <span class="page-intro__iris"></span>
+</div>
+
+<script>
+  const intro = document.querySelector('.page-intro');
+  const heroVideo = document.querySelector('.hero-media');
+  const heroLogo = document.querySelector('.hero-logo');
+
+  if (intro instanceof HTMLElement) {
+    document.documentElement.classList.add('page-intro-active');
+
+    const waitForEvent = (target, eventName, isReady) =>
+      new Promise((resolve) => {
+        if (!target || isReady()) {
+          resolve();
+          return;
+        }
+
+        const finish = () => {
+          target.removeEventListener(eventName, finish);
+          target.removeEventListener('error', finish);
+          resolve();
+        };
+
+        target.addEventListener(eventName, finish, { once: true });
+        target.addEventListener('error', finish, { once: true });
+      });
+
+    const videoReady = waitForEvent(
+      heroVideo,
+      'loadeddata',
+      () => heroVideo instanceof HTMLVideoElement && heroVideo.readyState >= 2,
+    );
+
+    const logoReady = waitForEvent(
+      heroLogo,
+      'load',
+      () => heroLogo instanceof HTMLImageElement && heroLogo.complete,
+    );
+
+    const minimumDisplay = new Promise((resolve) => window.setTimeout(resolve, 350));
+    const safetyTimeout = new Promise((resolve) => window.setTimeout(resolve, 5000));
+
+    const finishIntro = () => {
+      if (!intro.isConnected) return;
+      document.documentElement.classList.remove('page-intro-active');
+      intro.remove();
+    };
+
+    Promise.race([
+      Promise.all([videoReady, logoReady, minimumDisplay]),
+      safetyTimeout,
+    ]).then(() => {
+      const onAnimationEnd = (event) => {
+        if (event.target !== intro) return;
+        intro.removeEventListener('animationend', onAnimationEnd);
+        finishIntro();
+      };
+
+      intro.addEventListener('animationend', onAnimationEnd);
+      requestAnimationFrame(() => intro.classList.add('is-opening'));
+      window.setTimeout(finishIntro, 2200);
+    });
+  }
+</script>

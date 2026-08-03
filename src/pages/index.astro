@@ -6,9 +6,12 @@ import Grid from '../sections/Grid.astro'
 import Hero from '../sections/Hero.astro';
 import About from '../sections/About.astro'
 import Contact from '../sections/Contact.astro';
+import PageIntro from '../components/ui/PageIntro.astro';
+import ServicesBand from '../sections/ServicesBand.astro';
 ---
 <Layout>
     <main>
+        <PageIntro/>
         <Hero/>
         <About/>
         <Grid>
@@ -19,6 +22,7 @@ import Contact from '../sections/Contact.astro';
             <Cards url="/videos/ornamental.mov" poster="/videos/ornamental_poster.jpg" title="Ornamental" class="reveal"/> 
             <Cards url="/videos/petra.mov" poster="/videos/petra_poster.jpg" title="Petra" class="reveal reveal-delay-1"/> 
         </Grid>
+        <ServicesBand/>
         <Contact/>
     </main>
 </Layout>
