@@ -1,0 +1,110 @@
+@use "../abstracts/variables" as *;
+
+.services-band {
+  width: 100%;
+  min-height: 4.5rem;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  border-top: 1px solid rgba(246, 244, 241, 0.16);
+  border-bottom: 1px solid rgba(246, 244, 241, 0.16);
+  background: $color-gray-900;
+  color: $color-white;
+}
+
+.services-band__track {
+  width: max-content;
+  display: flex;
+  animation: services-band-scroll 28s linear infinite;
+  will-change: transform;
+}
+
+.services-band__group {
+  margin: 0;
+  padding: 0 1.5rem 0 0;
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 1.5rem;
+  list-style: none;
+
+  li {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    gap: 1.5rem;
+    color: $color-white;
+    font-family: $font-display;
+    font-size: clamp(1rem, 4.5vw, 1.25rem);
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    white-space: nowrap;
+
+    &::after {
+      content: "·";
+      color: rgba(246, 244, 241, 0.45);
+    }
+  }
+}
+
+.services-band:hover .services-band__track {
+  animation-play-state: paused;
+}
+
+@keyframes services-band-scroll {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (min-width: $bp-desktop) {
+  .services-band {
+    min-height: 6rem;
+  }
+
+  .services-band__track {
+    width: 100%;
+    animation: none;
+  }
+
+  .services-band__group:first-child {
+    width: 100%;
+    padding: 0 2rem;
+    justify-content: center;
+    gap: clamp(1rem, 1.8vw, 2rem);
+
+    li {
+      gap: clamp(1rem, 1.8vw, 2rem);
+      font-size: clamp(0.9rem, 1.25vw, 1.25rem);
+    }
+
+    li:last-child::after {
+      display: none;
+    }
+  }
+
+  .services-band__group[aria-hidden="true"] {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .services-band {
+    overflow-x: auto;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  .services-band__track {
+    animation: none;
+  }
+
+  .services-band__group[aria-hidden="true"] {
+    display: none;
+  }
+}
