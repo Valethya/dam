@@ -2,15 +2,25 @@
 import '../styles/main.scss';
 ---
 
-    <main>
-        <section class="error-page">
-            <a href="/" class="error-link-wrapper" title="Volver al inicio">
-                <div class="error-content-video">
-                     <video class="error-video" autoplay muted preload="auto" loop src="/videos/pulpo.mp4"></video>
-                </div>
-            </a>
-        </section>   
-    </main>
-     
+<main class="error-main">
+  <section class="error-page" aria-labelledby="error-message">
+    <div class="error-content-video" aria-hidden="true">
+      <video
+        class="error-video"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="auto"
+        src="/videos/pulpo.mp4"
+      ></video>
+    </div>
 
-             
+    <div class="error-copy">
+      <h1 class="error-message" id="error-message">
+        <span class="error-sr-only">Error 404. </span>Aquí no hay nada.
+      </h1>
+      <a href="/" class="error-back-link">Volver</a>
+    </div>
+  </section>
+</main>
