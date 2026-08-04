@@ -3,12 +3,14 @@
 </div>
 
 <script>
+  const root = document.documentElement;
   const intro = document.querySelector('.page-intro');
+  const bootShield = document.querySelector('.page-intro-boot-shield');
   const heroVideo = document.querySelector('.hero-media');
   const heroLogo = document.querySelector('.hero-logo');
 
   if (intro instanceof HTMLElement) {
-    document.documentElement.classList.add('page-intro-active');
+    root.classList.add('page-intro-active');
 
     const waitForEvent = (target, eventName, isReady) =>
       new Promise((resolve) => {
@@ -43,9 +45,9 @@
     const safetyTimeout = new Promise((resolve) => window.setTimeout(resolve, 5000));
 
     const finishIntro = () => {
-      if (!intro.isConnected) return;
-      document.documentElement.classList.remove('page-intro-active');
-      intro.remove();
+      root.classList.remove('page-intro-boot', 'page-intro-active');
+      bootShield?.remove();
+      if (intro.isConnected) intro.remove();
     };
 
     Promise.race([
@@ -59,8 +61,22 @@
       };
 
       intro.addEventListener('animationend', onAnimationEnd);
-      requestAnimationFrame(() => intro.classList.add('is-opening'));
+
+      // Keep the server-rendered shield until the real intro is fully painted.
+      // Releasing it one frame before the animation prevents Safari's first-paint flash.
+      requestAnimationFrame(() => {
+        bootShield?.remove();
+        root.classList.remove('page-intro-boot');
+
+        requestAnimationFrame(() => {
+          if (intro.isConnected) intro.classList.add('is-opening');
+        });
+      });
+
       window.setTimeout(finishIntro, 2200);
     });
+  } else {
+    root.classList.remove('page-intro-boot', 'page-intro-active');
+    bootShield?.remove();
   }
 </script>
