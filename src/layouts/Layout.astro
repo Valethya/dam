@@ -1,11 +1,21 @@
 ---
-const { title = 'Sitio', description = '' } = Astro.props;
+const {
+  title = 'Sitio',
+  description = '',
+  pageIntro = false,
+} = Astro.props;
 import Navbar from "../components/layout/Navbar.astro";
 import Footer from "../components/layout/Footer.astro";
 ---
 
 <!DOCTYPE html>
-<html lang="es">
+<html
+  lang="es"
+  class:list={{
+    "page-intro-boot": pageIntro,
+    "page-intro-active": pageIntro,
+  }}
+>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
@@ -18,9 +28,42 @@ import Footer from "../components/layout/Footer.astro";
       href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&family=Oswald:wght@300;400;500;600;700&display=swap"
       rel="stylesheet"
     />
+
+    <style is:inline>
+      html.page-intro-boot,
+      html.page-intro-boot body {
+        overflow: hidden;
+        background: #050203;
+      }
+
+      .page-intro-boot-shield {
+        position: fixed;
+        z-index: 2147483647;
+        inset: 0;
+        background: #050203;
+        pointer-events: none;
+      }
+    </style>
+
+    <noscript>
+      <style>
+        html.page-intro-boot,
+        html.page-intro-active,
+        html.page-intro-boot body,
+        html.page-intro-active body {
+          overflow: auto !important;
+        }
+
+        .page-intro,
+        .page-intro-boot-shield {
+          display: none !important;
+        }
+      </style>
+    </noscript>
   </head>
 
   <body>
+    {pageIntro && <div class="page-intro-boot-shield" aria-hidden="true"></div>}
     <Navbar/>
     <slot />
     <Footer/>
