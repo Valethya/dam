@@ -3,7 +3,7 @@
 @property --page-intro-radius {
   syntax: "<length>";
   inherits: false;
-  initial-value: -28vmax;
+  initial-value: 0vmax;
 }
 
 html.page-intro-active,
@@ -12,31 +12,36 @@ html.page-intro-active body {
 }
 
 .page-intro {
-  --page-intro-radius: -28vmax;
+  --page-intro-radius: 0vmax;
   position: fixed;
   z-index: 1000;
   inset: 0;
   overflow: hidden;
   pointer-events: auto;
   touch-action: none;
-  background: $color-black;
+  background: $color-gray-900;
+  -webkit-mask-image: none;
+  mask-image: none;
+  will-change: opacity;
+}
+
+.page-intro.is-primed {
   -webkit-mask-image: radial-gradient(
     circle at center,
-    transparent var(--page-intro-radius),
-    rgba(0, 0, 0, 0.12) calc(var(--page-intro-radius) + 5vmax),
-    rgba(0, 0, 0, 0.38) calc(var(--page-intro-radius) + 12vmax),
-    rgba(0, 0, 0, 0.72) calc(var(--page-intro-radius) + 20vmax),
-    #000 calc(var(--page-intro-radius) + 28vmax)
+    transparent calc(var(--page-intro-radius) - 28vmax),
+    rgba(0, 0, 0, 0.12) calc(var(--page-intro-radius) - 23vmax),
+    rgba(0, 0, 0, 0.38) calc(var(--page-intro-radius) - 16vmax),
+    rgba(0, 0, 0, 0.72) calc(var(--page-intro-radius) - 8vmax),
+    #000 var(--page-intro-radius)
   );
   mask-image: radial-gradient(
     circle at center,
-    transparent var(--page-intro-radius),
-    rgba(0, 0, 0, 0.12) calc(var(--page-intro-radius) + 5vmax),
-    rgba(0, 0, 0, 0.38) calc(var(--page-intro-radius) + 12vmax),
-    rgba(0, 0, 0, 0.72) calc(var(--page-intro-radius) + 20vmax),
-    #000 calc(var(--page-intro-radius) + 28vmax)
+    transparent calc(var(--page-intro-radius) - 28vmax),
+    rgba(0, 0, 0, 0.12) calc(var(--page-intro-radius) - 23vmax),
+    rgba(0, 0, 0, 0.38) calc(var(--page-intro-radius) - 16vmax),
+    rgba(0, 0, 0, 0.72) calc(var(--page-intro-radius) - 8vmax),
+    #000 var(--page-intro-radius)
   );
-  will-change: opacity, -webkit-mask-image, mask-image;
 }
 
 .page-intro__iris {
