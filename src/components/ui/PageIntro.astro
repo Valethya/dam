@@ -62,14 +62,19 @@
 
       intro.addEventListener('animationend', onAnimationEnd);
 
-      // Keep the server-rendered shield until the real intro is fully painted.
-      // Releasing it one frame before the animation prevents Safari's first-paint flash.
+      // Paint an opaque, primed intro underneath the server-rendered shield.
+      // The shield is released only when the opening animation starts, so
+      // Safari never receives an intermediate frame that exposes the Hero.
       requestAnimationFrame(() => {
-        bootShield?.remove();
-        root.classList.remove('page-intro-boot');
+        if (!intro.isConnected) return;
+        intro.classList.add('is-primed');
 
         requestAnimationFrame(() => {
-          if (intro.isConnected) intro.classList.add('is-opening');
+          if (!intro.isConnected) return;
+
+          intro.classList.add('is-opening');
+          bootShield?.remove();
+          root.classList.remove('page-intro-boot');
         });
       });
 
