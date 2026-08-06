@@ -1,11 +1,28 @@
 ---
-const {
-  title = 'Sitio',
-  description = '',
-  pageIntro = false,
-} = Astro.props;
 import Navbar from "../components/layout/Navbar.astro";
 import Footer from "../components/layout/Footer.astro";
+
+const {
+  title = "DAM Films | Productora audiovisual en Santiago",
+  description = "Productora audiovisual en Santiago especializada en contenido de marca, campañas, eventos, matrimonios y piezas editoriales con mirada cinematográfica.",
+  pageIntro = false,
+} = Astro.props;
+
+const siteURL = Astro.site ?? new URL("https://www.damfilms.cl");
+const canonicalURL = new URL(Astro.url.pathname, siteURL);
+const organizationSchema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "DAM Films",
+  url: new URL("/", siteURL).href,
+  logo: new URL("/svg/favicon.svg", siteURL).href,
+  description,
+  sameAs: ["https://www.instagram.com/damfilmscl/"],
+  areaServed: {
+    "@type": "City",
+    name: "Santiago de Chile",
+  },
+};
 ---
 
 <!DOCTYPE html>
@@ -21,6 +38,25 @@ import Footer from "../components/layout/Footer.astro";
     <meta name="viewport" content="width=device-width" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <link rel="canonical" href={canonicalURL} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="es_CL" />
+    <meta property="og:site_name" content="DAM Films" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalURL} />
+
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify(organizationSchema)}
+    />
+
     <link rel="icon" type="image/svg+xml" href="/svg/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
