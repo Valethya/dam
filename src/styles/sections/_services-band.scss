@@ -2,80 +2,140 @@
 
 .services-band {
   width: 100%;
-  min-height: clamp(14rem, 28dvh, 18rem);
-  padding: 3rem 1.25rem;
+  padding: $space-6 $space-4;
   display: flex;
-  align-items: center;
   justify-content: center;
   background: $color-gray-900;
   color: $color-white;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+
+  @media (min-width: $bp-tablet) {
+    padding: $space-8 $space-4;
+  }
 }
 
-.services-band__track {
-  width: 100%;
-}
-
-.services-band__group {
-  width: 100%;
-  margin: 0;
+.services-band__list {
+  width: 85%;
+  max-width: $container-max-width;
+  margin: 0 auto;
   padding: 0;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  gap: 0.8rem;
   list-style: none;
-  text-align: center;
 
-  li {
-    display: inline-flex;
-    flex: 0 0 auto;
-    align-items: center;
-    gap: 0.8rem;
+  @media (min-width: $bp-tablet) {
+    width: 100%;
+  }
+}
+
+.services-band__item {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+
+  &:first-child {
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+  }
+}
+
+.services-band__trigger {
+  width: 100%;
+  padding: $space-3 0;
+  display: grid;
+  grid-template-columns: 2.25rem minmax(0, 1fr) auto;
+  gap: $space-2;
+  align-items: baseline;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+
+  &:focus-visible {
+    outline: 1px solid rgba(255, 255, 255, 0.75);
+    outline-offset: 0.35rem;
+  }
+
+  @media (min-width: $bp-tablet) {
+    grid-template-columns: 3.5rem minmax(0, 1fr) auto;
+    gap: $space-3;
+    padding: $space-4 0;
+  }
+}
+
+.services-band__number {
+  font-family: $font-display;
+  font-size: 0.8rem;
+  line-height: 1;
+  color: rgba(255, 255, 255, 0.32);
+}
+
+.services-band__title {
+  font-family: $font-display;
+  font-size: clamp(1.35rem, 6vw, 2rem);
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: $color-white;
+
+  @media (min-width: $bp-tablet) {
+    font-size: clamp(2rem, 3.2vw, 3.25rem);
+    letter-spacing: 0.14em;
+  }
+}
+
+.services-band__icon {
+  font-family: $font-primary;
+  font-size: 1.5rem;
+  font-weight: 300;
+  line-height: 1;
+  color: rgba(255, 255, 255, 0.4);
+  transition:
+    transform 0.4s ease,
+    color 0.3s ease;
+
+  @media (min-width: $bp-tablet) {
+    font-size: 2rem;
+  }
+}
+
+.services-band__content {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition:
+    max-height 0.45s ease-out,
+    opacity 0.3s ease-out;
+
+  p {
+    max-width: 70ch;
+    margin: 0;
+    padding: 0 $space-3 $space-4 3rem;
+    font-family: $font-primary;
+    font-size: $font-size-base;
+    line-height: 1.6;
+    color: $color-gray-300;
+
+    @media (min-width: $bp-tablet) {
+      padding-left: 5rem;
+      padding-bottom: $space-5;
+      font-size: $font-size-lg;
+    }
+  }
+}
+
+.services-band__item.active {
+  .services-band__icon {
+    transform: rotate(45deg);
     color: $color-white;
-    font-family: $font-display;
-    font-size: clamp(1rem, 4.6vw, 1.25rem);
-    font-weight: 500;
-    line-height: 1.1;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    white-space: nowrap;
+  }
 
-    &:not(:last-child)::after {
-      content: "·";
-      color: rgba(246, 244, 241, 0.45);
-    }
+  .services-band__content {
+    max-height: 14rem;
+    opacity: 1;
   }
 }
 
-@media (min-width: $bp-tablet) {
-  .services-band {
-    min-height: clamp(16rem, 30dvh, 22rem);
-    padding: 3.5rem 2rem;
-  }
-
-  .services-band__group {
-    gap: 1rem 1.25rem;
-
-    li {
-      gap: 1.25rem;
-      font-size: clamp(1.2rem, 2.5vw, 1.65rem);
-    }
-  }
-}
-
-@media (min-width: $bp-desktop) {
-  .services-band {
-    min-height: clamp(18rem, 34dvh, 26rem);
-    padding: 4rem clamp(2rem, 4vw, 5rem);
-  }
-
-  .services-band__group {
-    gap: 1.25rem clamp(1.25rem, 1.8vw, 2rem);
-
-    li {
-      gap: clamp(1.25rem, 1.8vw, 2rem);
-      font-size: clamp(1.5rem, 1.8vw, 2.25rem);
-    }
+@media (prefers-reduced-motion: reduce) {
+  .services-band__icon,
+  .services-band__content {
+    transition: none;
   }
 }
