@@ -5,12 +5,31 @@
   padding: $space-6 $space-4;
   background-color: $color-gray-900;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 
   @media (min-width: $bp-tablet) {
     padding: $space-8 $space-4;
+  }
+}
+
+.about-section-title {
+  width: 85%;
+  max-width: $container-max-width;
+  margin: 0 auto $space-5;
+  font-family: $font-display;
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.72);
+
+  @media (min-width: $bp-tablet) {
+    width: 100%;
+    margin-bottom: $space-6;
   }
 }
 
