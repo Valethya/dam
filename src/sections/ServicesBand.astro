@@ -1,17 +1,104 @@
 ---
 const services = [
-  'Contenido de marca',
-  'Campañas',
-  'Eventos y matrimonios',
-  'Piezas editoriales',
-  'Dirección audiovisual',
+  {
+    number: '01',
+    title: 'Contenido de marca',
+    description:
+      'Piezas pensadas para vivir en redes y campañas digitales — ritmo rápido, identidad clara, hechas para detener el scroll.',
+  },
+  {
+    number: '02',
+    title: 'Campañas',
+    description:
+      'Producciones con dirección de principio a fin: guion, locación, edición. Para marcas que necesitan una historia completa, no solo un clip.',
+  },
+  {
+    number: '03',
+    title: 'Eventos y matrimonios',
+    description:
+      'Cobertura con mirada de cine para los días que no se repiten — desde el detalle hasta la toma general, sin perderse nada.',
+  },
+  {
+    number: '04',
+    title: 'Piezas editoriales',
+    description:
+      'Contenido con estética propia para revistas, lanzamientos o colaboraciones — donde la imagen es tan protagonista como el mensaje.',
+  },
+  {
+    number: '05',
+    title: 'Dirección audiovisual',
+    description:
+      'Consultoría creativa para proyectos que ya tienen equipo propio y necesitan una mirada externa que ordene la narrativa visual.',
+  },
 ];
 ---
 
 <section class="services-band" aria-label="Servicios audiovisuales">
-  <div class="services-band__track">
-    <ul class="services-band__group">
-      {services.map((service) => <li>{service}</li>)}
-    </ul>
-  </div>
+  <ul class="services-band__list">
+    {
+      services.map((service, index) => {
+        const panelId = `service-panel-${index + 1}`;
+        const triggerId = `service-trigger-${index + 1}`;
+
+        return (
+          <li class="services-band__item">
+            <button
+              class="services-band__trigger"
+              type="button"
+              id={triggerId}
+              aria-expanded="false"
+              aria-controls={panelId}
+            >
+              <span class="services-band__number">{service.number}</span>
+              <span class="services-band__title">{service.title}</span>
+              <span class="services-band__icon" aria-hidden="true">+</span>
+            </button>
+            <div
+              class="services-band__content"
+              id={panelId}
+              role="region"
+              aria-labelledby={triggerId}
+              aria-hidden="true"
+            >
+              <p>{service.description}</p>
+            </div>
+          </li>
+        );
+      })
+    }
+  </ul>
 </section>
+
+<script>
+  function initServicesAccordion() {
+    const items = document.querySelectorAll<HTMLElement>('.services-band__item');
+
+    const closeItem = (item: HTMLElement) => {
+      const trigger = item.querySelector<HTMLButtonElement>('.services-band__trigger');
+      const content = item.querySelector<HTMLElement>('.services-band__content');
+
+      item.classList.remove('active');
+      trigger?.setAttribute('aria-expanded', 'false');
+      content?.setAttribute('aria-hidden', 'true');
+    };
+
+    items.forEach((item) => {
+      const trigger = item.querySelector<HTMLButtonElement>('.services-band__trigger');
+      const content = item.querySelector<HTMLElement>('.services-band__content');
+
+      trigger?.addEventListener('click', () => {
+        const shouldOpen = !item.classList.contains('active');
+
+        items.forEach(closeItem);
+
+        if (shouldOpen) {
+          item.classList.add('active');
+          trigger.setAttribute('aria-expanded', 'true');
+          content?.setAttribute('aria-hidden', 'false');
+        }
+      });
+    });
+  }
+
+  initServicesAccordion();
+</script>
