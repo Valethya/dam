@@ -3,6 +3,7 @@ const {
   url,
   poster,
   title = "proyecto",
+  category,
   class: className = ""
 } = Astro.props;
 
@@ -30,7 +31,10 @@ const isVideo = url && /\.(mp4|mov|webm)$/i.test(url);
             loading="lazy"
         />
     )}
-    <div class="card-overlay" >
-        <h3 class="card-title">{title}</h3>
+    <div class="card-overlay">
+        <div class="card-meta">
+            <h3 class="card-title">{title}</h3>
+            {category && <p class="card-category">{category}</p>}
+        </div>
     </div>
 </article>

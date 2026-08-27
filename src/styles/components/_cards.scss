@@ -89,14 +89,37 @@
   display: flex;
   align-items: flex-end;
 
-  padding: 1rem;
+  padding: 1.4rem;
 
   background: linear-gradient(to top, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0));
 
   opacity: 0;
   transition: opacity 0.4s ease;
+
+  @media (min-width: $bp-tablet) {
+    padding: 1.6rem;
+  }
+
+  @media (min-width: $bp-desktop) {
+    padding: 1.8rem;
+  }
+}
+
+.card-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
 }
 
 .card-title {
   color: white;
+  line-height: 1;
+}
+
+.card-category {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: clamp(0.72rem, 0.8vw, 0.9rem);
+  line-height: 1.2;
+  letter-spacing: 0.04em;
 }
