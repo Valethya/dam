@@ -97,6 +97,21 @@
   transition: opacity 0.4s ease;
 }
 
+.card-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
 .card-title {
   color: white;
+  line-height: 1;
+}
+
+.card-category {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: clamp(0.72rem, 0.8vw, 0.9rem);
+  line-height: 1.2;
+  letter-spacing: 0.04em;
 }
