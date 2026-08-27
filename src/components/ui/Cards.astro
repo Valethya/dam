@@ -9,7 +9,6 @@ const {
 const isVideo = url && /\.(mp4|mov|webm)$/i.test(url);
 ---
 
-
 <article class={`card ${className}`}>
     {isVideo ? (
         <video
@@ -19,7 +18,7 @@ const isVideo = url && /\.(mp4|mov|webm)$/i.test(url);
             muted
             loop
             playsinline
-            preload="metadata"
+            preload="none"
         ></video>
     ) : (
         <img
@@ -34,5 +33,4 @@ const isVideo = url && /\.(mp4|mov|webm)$/i.test(url);
     <div class="card-overlay" >
         <h3 class="card-title">{title}</h3>
     </div>
-
 </article>

@@ -207,7 +207,7 @@
     opacity: 1;
     transform: translateY(0);
 
-    @for $item from 1 through 4 {
+    @for $item from 1 through 5 {
       &:nth-child(#{$item}) {
         transition-delay: #{0.2 + ($item * 0.055)}s;
       }
