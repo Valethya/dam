@@ -35,6 +35,27 @@
       () => heroVideo instanceof HTMLVideoElement && heroVideo.readyState >= 2,
     );
 
+    const posterReady = new Promise((resolve) => {
+      if (!(heroVideo instanceof HTMLVideoElement) || !heroVideo.poster) {
+        resolve();
+        return;
+      }
+
+      const posterImage = new Image();
+      const finish = () => {
+        posterImage.removeEventListener('load', finish);
+        posterImage.removeEventListener('error', finish);
+        resolve();
+      };
+
+      posterImage.addEventListener('load', finish, { once: true });
+      posterImage.addEventListener('error', finish, { once: true });
+      posterImage.src = heroVideo.poster;
+      if (posterImage.complete) finish();
+    });
+
+    const heroMediaReady = Promise.race([videoReady, posterReady]);
+
     const logoReady = waitForEvent(
       heroLogo,
       'load',
@@ -42,7 +63,7 @@
     );
 
     const minimumDisplay = new Promise((resolve) => window.setTimeout(resolve, 350));
-    const safetyTimeout = new Promise((resolve) => window.setTimeout(resolve, 5000));
+    const safetyTimeout = new Promise((resolve) => window.setTimeout(resolve, 3500));
 
     const finishIntro = () => {
       root.classList.remove('page-intro-boot', 'page-intro-active');
@@ -51,7 +72,7 @@
     };
 
     Promise.race([
-      Promise.all([videoReady, logoReady, minimumDisplay]),
+      Promise.all([heroMediaReady, logoReady, minimumDisplay]),
       safetyTimeout,
     ]).then(() => {
       const onAnimationEnd = (event) => {
@@ -62,9 +83,6 @@
 
       intro.addEventListener('animationend', onAnimationEnd);
 
-      // Start the masked animation behind the server-rendered shield.
-      // Safari can expose the mask for one frame while initializing it, so the
-      // shield stays in place long enough for several real paints to complete.
       requestAnimationFrame(() => {
         if (!intro.isConnected) return;
         intro.classList.add('is-primed', 'is-opening');
