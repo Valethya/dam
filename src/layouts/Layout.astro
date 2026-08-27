@@ -58,6 +58,14 @@ const organizationSchema = {
     />
 
     <link rel="icon" type="image/svg+xml" href="/svg/favicon.svg" />
+    {pageIntro && (
+      <link
+        rel="preload"
+        as="image"
+        href="/videos/DRONLOGT1_poster.webp"
+        fetchpriority="high"
+      />
+    )}
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
