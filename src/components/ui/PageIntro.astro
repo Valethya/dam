@@ -11,9 +11,10 @@
 
   // Instagram may append tracking parameters inside the contact fragment.
   const initialHash = window.location.hash;
-  const contactLink = initialHash.split('?')[0] === '#contact';
+  const params = new URLSearchParams(window.location.search);
+  const contactLink = initialHash.split('?')[0] === '#contact' || params.get('section') === 'contact' || params.get('ref') === 'instagram#contact';
 
-  if (contactLink && initialHash !== '#contact') {
+  if (contactLink && initialHash.startsWith('#contact?')) {
     const url = new URL(window.location.href);
     const tracking = new URLSearchParams(initialHash.slice(initialHash.indexOf('?') + 1));
     tracking.forEach((value, key) => {
@@ -29,7 +30,7 @@
     bootShield?.remove();
     intro?.remove();
     const scrollToContact = () => {
-      if (window.location.hash === '#contact') {
+      if (window.location.hash === '#contact' || (!window.location.hash && (params.get('section') === 'contact' || params.get('ref') === 'instagram#contact'))) {
         document.getElementById('contact')?.scrollIntoView({ behavior: 'instant', block: 'start' });
       }
     };
