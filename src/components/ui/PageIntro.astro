@@ -9,7 +9,37 @@
   const heroVideo = document.querySelector('.hero-media');
   const heroLogo = document.querySelector('.hero-logo');
 
-  if (intro instanceof HTMLElement) {
+  // Instagram may append tracking parameters inside the contact fragment.
+  const initialHash = window.location.hash;
+  const contactLink = initialHash.split('?')[0] === '#contact';
+
+  if (contactLink && initialHash !== '#contact') {
+    const url = new URL(window.location.href);
+    const tracking = new URLSearchParams(initialHash.slice(initialHash.indexOf('?') + 1));
+    tracking.forEach((value, key) => {
+      if (!url.searchParams.has(key)) url.searchParams.append(key, value);
+    });
+    url.hash = 'contact';
+    window.history.replaceState(window.history.state, '', url);
+  }
+
+  if (contactLink) {
+    // Deep links should not wait for the hero animation or its scroll lock.
+    root.classList.remove('page-intro-boot', 'page-intro-active');
+    bootShield?.remove();
+    intro?.remove();
+    const scrollToContact = () => {
+      if (window.location.hash === '#contact') {
+        document.getElementById('contact')?.scrollIntoView({ behavior: 'instant', block: 'start' });
+      }
+    };
+    if (document.readyState === 'complete') {
+      requestAnimationFrame(scrollToContact);
+    } else {
+      window.addEventListener('load', scrollToContact, { once: true });
+    }
+    requestAnimationFrame(scrollToContact);
+  } else if (intro instanceof HTMLElement) {
     root.classList.add('page-intro-active');
 
     const waitForEvent = (target, eventName, isReady) =>
