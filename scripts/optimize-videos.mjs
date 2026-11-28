@@ -49,17 +49,12 @@ for (const [inputRel, outputRel, scale, bitrate] of jobs) {
   console.log(`[video] listo ${outputRel} ${(statSync(output).size / 1024 / 1024).toFixed(2)} MB`);
 }
 
-const heroPoster = resolve('public/videos/DRONLOGT1_poster.webp');
-rmSync(heroPoster, { force: true });
-runFfmpeg([
-  '-y',
-  '-ss', '1',
-  '-i', resolve('public/videos/DRONLOGT1-web.mp4'),
-  '-frames:v', '1',
-  '-vf', 'scale=1280:-2:flags=lanczos',
-  '-c:v', 'libwebp',
-  '-q:v', '76',
-  heroPoster,
-], 'poster del hero');
-
-console.log(`[video] poster hero listo ${(statSync(heroPoster).size / 1024).toFixed(0)} KB`);
+// Extract the first decoded frame from the exact delivered video.
+for (const [, outputRel] of jobs) {
+  const poster = resolve(outputRel.replace(/-web\.mp4$/, '-first-frame.webp'));
+  runFfmpeg([
+    '-y', '-i', resolve(outputRel), '-map', '0:v:0',
+    '-frames:v', '1', '-c:v', 'libwebp', '-lossless', '1', poster,
+  ], poster);
+  console.log(`[video] poster listo ${poster}`);
+}
