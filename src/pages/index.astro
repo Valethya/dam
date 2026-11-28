@@ -18,12 +18,12 @@ const pageDescription = 'Productora audiovisual en Santiago especializada en con
         <Hero/>
         <About/>
         <Grid>
-            <Cards url="/videos/barberhaus-web.mp4" poster="/videos/barberhaus_poster.webp" title="Barberhaus" category="Comercial" class="reveal"/> 
-            <Cards url="/videos/matrimonioam-web.mp4" poster="/videos/matrimonioam_poster.jpg" title="Catalina & Jason" category="Ceremonia" class="reveal reveal-delay-1"/> 
-            <Cards url="/videos/matrimoniopm-web.mp4" poster="/videos/matrimoniopm_poster.jpg" title="Catalina & Jason" category="Fiesta" class="reveal reveal-delay-2"/> 
-            <Cards url="/videos/nikkei-web.mp4" poster="/videos/nikkei_poster.jpg" title="Nikkei" category="Contenido de marca" class="reveal reveal-delay-3"/> 
-            <Cards url="/videos/ornamental-web.mp4" poster="/videos/ornamental_poster.jpg" title="Ornamental" category="Comercial" class="reveal"/> 
-            <Cards url="/videos/petra-web.mp4" poster="/videos/petra_poster.jpg" title="Petra" category="Pieza editorial" class="reveal reveal-delay-1"/> 
+            <Cards url="/videos/barberhaus-web.mp4" poster="/videos/barberhaus-first-frame.webp" title="Barberhaus" category="Comercial" class="reveal"/> 
+            <Cards url="/videos/matrimonioam-web.mp4" poster="/videos/matrimonioam-first-frame.webp" title="Catalina & Jason" category="Ceremonia" class="reveal reveal-delay-1"/> 
+            <Cards url="/videos/matrimoniopm-web.mp4" poster="/videos/matrimoniopm-first-frame.webp" title="Catalina & Jason" category="Fiesta" class="reveal reveal-delay-2"/> 
+            <Cards url="/videos/nikkei-web.mp4" poster="/videos/nikkei-first-frame.webp" title="Nikkei" category="Contenido de marca" class="reveal reveal-delay-3"/> 
+            <Cards url="/videos/ornamental-web.mp4" poster="/videos/ornamental-first-frame.webp" title="Ornamental" category="Comercial" class="reveal"/> 
+            <Cards url="/videos/petra-web.mp4" poster="/videos/petra-first-frame.webp" title="Petra" category="Pieza editorial" class="reveal reveal-delay-1"/> 
         </Grid>
         <ServicesBand/>
         <Contact/>
@@ -44,6 +44,15 @@ const pageDescription = 'Productora audiovisual en Santiago especializada en con
   document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
   const supportsHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+  const preloadObserver = new IntersectionObserver(entries => {
+    entries.forEach(({target, isIntersecting}) => {
+      if (!isIntersecting || !(target instanceof HTMLVideoElement)) return;
+      target.preload = 'metadata';
+      preloadObserver.unobserve(target);
+    });
+  }, { rootMargin: '300px 0px' });
+  document.querySelectorAll('video.card-video').forEach(video => preloadObserver.observe(video));
 
   // 2. Play/Pause videos based on viewport visibility on hover-capable devices.
   // On touch devices, playback starts only from the user's first tap.

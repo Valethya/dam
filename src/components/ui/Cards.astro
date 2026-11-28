@@ -16,6 +16,7 @@ const isVideo = url && /\.(mp4|mov|webm)$/i.test(url);
             class="card-video"
             src={url}
             poster={poster}
+            style={`background-image: url("${poster}"); background-size: cover; background-position: center;`}
             muted
             loop
             playsinline

@@ -49,17 +49,21 @@ for (const [inputRel, outputRel, scale, bitrate] of jobs) {
   console.log(`[video] listo ${outputRel} ${(statSync(output).size / 1024 / 1024).toFixed(2)} MB`);
 }
 
-const heroPoster = resolve('public/videos/DRONLOGT1_poster.webp');
-rmSync(heroPoster, { force: true });
-runFfmpeg([
-  '-y',
-  '-ss', '1',
-  '-i', resolve('public/videos/DRONLOGT1-web.mp4'),
-  '-frames:v', '1',
-  '-vf', 'scale=1280:-2:flags=lanczos',
-  '-c:v', 'libwebp',
-  '-q:v', '76',
-  heroPoster,
-], 'poster del hero');
-
-console.log(`[video] poster hero listo ${(statSync(heroPoster).size / 1024).toFixed(0)} KB`);
+// Find the first frame with meaningful visible content, including after a fade.
+for (const [, outputRel] of jobs) {
+  const video = resolve(outputRel);
+  const poster = resolve(outputRel.replace(/-web\.mp4$/, '-first-frame.webp'));
+  const result = spawnSync(ffmpegPath, [
+    '-v', 'info', '-i', video, '-an',
+    '-vf', "scale=160:-2,blackframe=amount=0:threshold=40,metadata=mode=select:key=lavfi.blackframe.pblack:value=85:function=less,showinfo",
+    '-frames:v', '1', '-f', 'null', '-',
+  ], { encoding: 'utf8', maxBuffer: 32 * 1024 * 1024 });
+  if (result.status !== 0) throw new Error('Poster scan failed: ' + outputRel);
+  const match = result.stderr.match(/pts_time:([0-9.]+)/);
+  const time = match ? Number(match[1]) : 0;
+  runFfmpeg([
+    '-y', '-i', video, '-ss', String(time), '-map', '0:v:0',
+    '-frames:v', '1', '-c:v', 'libwebp', '-lossless', '1', poster,
+  ], poster);
+  console.log(`[video] poster listo ${poster} @ ${time}s`);
+}
